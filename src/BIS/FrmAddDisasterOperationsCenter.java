@@ -187,14 +187,13 @@ public class FrmAddDisasterOperationsCenter extends javax.swing.JFrame {
         setTitle("Add Disaster Operations Center");
         setBackground(new java.awt.Color(0, 153, 153));
 
-        jPanel1.setBackground(new java.awt.Color(0, 153, 153));
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Add Disaster Operations Center", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
+        jPanel1.setBackground(new java.awt.Color(153, 153, 153));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Location"));
 
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Date");
 
-        jPanel2.setBackground(new java.awt.Color(0, 153, 153));
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Location", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
+        jPanel2.setBackground(new java.awt.Color(153, 153, 153));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Location"));
 
         ComboBoxLocation.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Main", "Alternate" }));
         ComboBoxLocation.addActionListener(new java.awt.event.ActionListener() {
@@ -230,12 +229,10 @@ public class FrmAddDisasterOperationsCenter extends javax.swing.JFrame {
             }
         });
 
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Land/Floor area");
 
-        jPanel3.setBackground(new java.awt.Color(0, 153, 153));
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Contact Number", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
-        jPanel3.setForeground(new java.awt.Color(0, 153, 153));
+        jPanel3.setBackground(new java.awt.Color(153, 153, 153));
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Location"));
 
         ComboBoxNo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Land line", "Mobile", "Frequency No", "Fax Machine", "Email Address" }));
 
@@ -260,9 +257,8 @@ public class FrmAddDisasterOperationsCenter extends javax.swing.JFrame {
                 .addContainerGap(22, Short.MAX_VALUE))
         );
 
-        jPanel4.setBackground(new java.awt.Color(0, 153, 153));
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Utilities Available", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
-        jPanel4.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel4.setBackground(new java.awt.Color(153, 153, 153));
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Location"));
 
         ComboBoxUtilities.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Electricity", "Water" }));
 
@@ -287,7 +283,7 @@ public class FrmAddDisasterOperationsCenter extends javax.swing.JFrame {
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
-        tblDOC1.setBackground(new java.awt.Color(240, 240, 240));
+        tblDOC1.setBackground(new java.awt.Color(153, 153, 153));
         tblDOC1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -306,7 +302,6 @@ public class FrmAddDisasterOperationsCenter extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblDOC1);
 
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Personal-in-charge");
 
         txtPersonal.addActionListener(new java.awt.event.ActionListener() {
@@ -315,6 +310,7 @@ public class FrmAddDisasterOperationsCenter extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Save.png"))); // NOI18N
         jButton1.setText("Save");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -322,6 +318,7 @@ public class FrmAddDisasterOperationsCenter extends javax.swing.JFrame {
             }
         });
 
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Delete.png"))); // NOI18N
         jButton3.setText("Delete");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -329,6 +326,7 @@ public class FrmAddDisasterOperationsCenter extends javax.swing.JFrame {
             }
         });
 
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Cancel.png"))); // NOI18N
         jButton4.setText("Cancel");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -336,6 +334,7 @@ public class FrmAddDisasterOperationsCenter extends javax.swing.JFrame {
             }
         });
 
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Update User.png"))); // NOI18N
         jButton2.setText("Update");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -343,6 +342,7 @@ public class FrmAddDisasterOperationsCenter extends javax.swing.JFrame {
             }
         });
 
+        btnClear.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Add New.png"))); // NOI18N
         btnClear.setText("New");
         btnClear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -351,7 +351,6 @@ public class FrmAddDisasterOperationsCenter extends javax.swing.JFrame {
         });
 
         jLabel7.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Date");
 
         ComboBoxDate.addItemListener(new java.awt.event.ItemListener() {
@@ -360,13 +359,11 @@ public class FrmAddDisasterOperationsCenter extends javax.swing.JFrame {
             }
         });
 
-        jPanel5.setBackground(new java.awt.Color(0, 153, 153));
-        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "If Yes", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
+        jPanel5.setBackground(new java.awt.Color(153, 153, 153));
+        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Location"));
 
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("24/7 Operation");
 
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Others (Pls Specify)");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -401,9 +398,8 @@ public class FrmAddDisasterOperationsCenter extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        rno.setBackground(new java.awt.Color(0, 153, 153));
+        rno.setBackground(new java.awt.Color(153, 153, 153));
         buttonGroup1.add(rno);
-        rno.setForeground(new java.awt.Color(255, 255, 255));
         rno.setText("No");
         rno.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -411,9 +407,8 @@ public class FrmAddDisasterOperationsCenter extends javax.swing.JFrame {
             }
         });
 
-        ryes.setBackground(new java.awt.Color(0, 153, 153));
+        ryes.setBackground(new java.awt.Color(153, 153, 153));
         buttonGroup1.add(ryes);
-        ryes.setForeground(new java.awt.Color(255, 255, 255));
         ryes.setText("Yes");
         ryes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -421,7 +416,6 @@ public class FrmAddDisasterOperationsCenter extends javax.swing.JFrame {
             }
         });
 
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Disaster/Emergency Operations Center:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -461,7 +455,7 @@ public class FrmAddDisasterOperationsCenter extends javax.swing.JFrame {
                                         .addComponent(jButton2)
                                         .addGap(18, 18, 18)
                                         .addComponent(jButton3)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 574, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()

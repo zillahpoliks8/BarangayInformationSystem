@@ -52,7 +52,7 @@ public class FrmAbout extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Poor Richard", 1, 24)); // NOI18N
         jLabel2.setText("Barangay Information System");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(135, 63, -1, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 60, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

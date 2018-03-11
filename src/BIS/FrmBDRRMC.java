@@ -359,11 +359,11 @@ DefaultTableModel dm;
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("MAIN");
 
-        LocalHazard.setBackground(new java.awt.Color(0, 0, 0));
+        LocalHazard.setBackground(new java.awt.Color(153, 153, 153));
 
-        jPanel1.setBackground(new java.awt.Color(102, 0, 51));
+        jPanel1.setBackground(new java.awt.Color(153, 153, 153));
 
-        tblBDRRMC1.setBackground(new java.awt.Color(240, 240, 240));
+        tblBDRRMC1.setBackground(new java.awt.Color(153, 153, 153));
         tblBDRRMC1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
@@ -383,9 +383,10 @@ DefaultTableModel dm;
         jScrollPane11.setViewportView(tblBDRRMC1);
 
         jLabel33.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        jLabel33.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel33.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/ID.png"))); // NOI18N
         jLabel33.setText("ID");
 
+        btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Delete.png"))); // NOI18N
         btnDelete.setText("Delete");
         btnDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -393,6 +394,7 @@ DefaultTableModel dm;
             }
         });
 
+        btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Edit.png"))); // NOI18N
         btnAdd.setText("Edit");
         btnAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -419,7 +421,7 @@ DefaultTableModel dm;
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnAdd)
                         .addGap(18, 18, 18)
                         .addComponent(btnDelete)))
                 .addContainerGap())
@@ -442,9 +444,9 @@ DefaultTableModel dm;
 
         LocalHazard.addTab("BDRRMC", jPanel1);
 
-        jPanel2.setBackground(new java.awt.Color(0, 153, 153));
+        jPanel2.setBackground(new java.awt.Color(153, 153, 153));
 
-        tblDOC1.setBackground(new java.awt.Color(240, 240, 240));
+        tblDOC1.setBackground(new java.awt.Color(153, 153, 153));
         tblDOC1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -465,12 +467,13 @@ DefaultTableModel dm;
 
         jLabel30.setBackground(new java.awt.Color(255, 255, 255));
         jLabel30.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        jLabel30.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel30.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/ID.png"))); // NOI18N
         jLabel30.setText("ID");
 
         txtID1.setFont(new java.awt.Font("Vani", 1, 18)); // NOI18N
         txtID1.setForeground(new java.awt.Color(255, 255, 255));
 
+        jButton34.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Edit.png"))); // NOI18N
         jButton34.setText("Edit");
         jButton34.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -478,6 +481,7 @@ DefaultTableModel dm;
             }
         });
 
+        jButton36.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Delete.png"))); // NOI18N
         jButton36.setText("Delete");
         jButton36.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -515,7 +519,7 @@ DefaultTableModel dm;
                     .addComponent(txtID1, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton34)
                     .addComponent(jButton36))
@@ -524,13 +528,13 @@ DefaultTableModel dm;
 
         LocalHazard.addTab("Disaster Operations Center", jPanel2);
 
-        jPanel3.setBackground(new java.awt.Color(0, 0, 51));
+        jPanel3.setBackground(new java.awt.Color(153, 153, 153));
 
         jLabel11.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/ID.png"))); // NOI18N
         jLabel11.setText("ID");
 
-        tblAreas1.setBackground(new java.awt.Color(240, 240, 240));
+        tblAreas1.setBackground(new java.awt.Color(153, 153, 153));
         tblAreas1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -550,9 +554,9 @@ DefaultTableModel dm;
         jScrollPane4.setViewportView(tblAreas1);
 
         txtID2.setFont(new java.awt.Font("Vani", 1, 18)); // NOI18N
-        txtID2.setForeground(new java.awt.Color(255, 255, 255));
         txtID2.setText("0");
 
+        jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Edit.png"))); // NOI18N
         jButton10.setText("Edit");
         jButton10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -560,6 +564,7 @@ DefaultTableModel dm;
             }
         });
 
+        jButton12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Delete.png"))); // NOI18N
         jButton12.setText("Delete");
         jButton12.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -597,7 +602,7 @@ DefaultTableModel dm;
                     .addComponent(txtID2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton10)
                     .addComponent(jButton12))
@@ -606,17 +611,18 @@ DefaultTableModel dm;
 
         LocalHazard.addTab("Prone Areas", jPanel3);
 
-        jPanel6.setBackground(new java.awt.Color(51, 51, 0));
+        jPanel6.setBackground(new java.awt.Color(153, 153, 153));
 
         jLabel14.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel14.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/ID.png"))); // NOI18N
         jLabel14.setText("ID");
 
         txtID3.setFont(new java.awt.Font("Vani", 1, 18)); // NOI18N
-        txtID3.setForeground(new java.awt.Color(255, 255, 255));
+        txtID3.setForeground(new java.awt.Color(51, 51, 51));
         txtID3.setText("0");
 
-        tblConditions1.setBackground(new java.awt.Color(240, 240, 240));
+        tblConditions1.setBackground(new java.awt.Color(153, 153, 153));
         tblConditions1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -635,6 +641,8 @@ DefaultTableModel dm;
         });
         jScrollPane5.setViewportView(tblConditions1);
 
+        jButton14.setForeground(new java.awt.Color(51, 51, 51));
+        jButton14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Edit.png"))); // NOI18N
         jButton14.setText("Edit");
         jButton14.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -642,6 +650,7 @@ DefaultTableModel dm;
             }
         });
 
+        jButton16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Delete.png"))); // NOI18N
         jButton16.setText("Delete");
         jButton16.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -679,7 +688,7 @@ DefaultTableModel dm;
                     .addComponent(txtID3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton14)
                     .addComponent(jButton16))
@@ -688,17 +697,16 @@ DefaultTableModel dm;
 
         LocalHazard.addTab("Conditions", jPanel6);
 
-        jPanel7.setBackground(new java.awt.Color(0, 102, 102));
+        jPanel7.setBackground(new java.awt.Color(153, 153, 153));
 
         jLabel17.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        jLabel17.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/ID.png"))); // NOI18N
         jLabel17.setText("ID");
 
         txtID4.setFont(new java.awt.Font("Vani", 1, 18)); // NOI18N
-        txtID4.setForeground(new java.awt.Color(255, 255, 255));
         txtID4.setText("0");
 
-        tblFacilities1.setBackground(new java.awt.Color(240, 240, 240));
+        tblFacilities1.setBackground(new java.awt.Color(153, 153, 153));
         tblFacilities1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -712,6 +720,7 @@ DefaultTableModel dm;
         ));
         jScrollPane6.setViewportView(tblFacilities1);
 
+        jButton18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Edit.png"))); // NOI18N
         jButton18.setText("Edit");
         jButton18.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -719,6 +728,7 @@ DefaultTableModel dm;
             }
         });
 
+        jButton20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Delete.png"))); // NOI18N
         jButton20.setText("Delete");
         jButton20.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -756,7 +766,7 @@ DefaultTableModel dm;
                     .addComponent(txtID4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton18)
                     .addComponent(jButton20))
@@ -765,17 +775,18 @@ DefaultTableModel dm;
 
         LocalHazard.addTab("Government Infrastracture", jPanel7);
 
-        jPanel8.setBackground(new java.awt.Color(102, 0, 0));
+        jPanel8.setBackground(new java.awt.Color(153, 153, 153));
 
+        jLabel20.setBackground(new java.awt.Color(0, 0, 0));
         jLabel20.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        jLabel20.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/ID.png"))); // NOI18N
         jLabel20.setText("ID");
 
+        jLabel21.setBackground(new java.awt.Color(0, 0, 0));
         jLabel21.setFont(new java.awt.Font("Vani", 1, 18)); // NOI18N
-        jLabel21.setForeground(new java.awt.Color(255, 255, 255));
         jLabel21.setText("0");
 
-        jTable6.setBackground(new java.awt.Color(240, 240, 240));
+        jTable6.setBackground(new java.awt.Color(153, 153, 153));
         jTable6.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -789,6 +800,7 @@ DefaultTableModel dm;
         ));
         jScrollPane7.setViewportView(jTable6);
 
+        jButton22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Edit.png"))); // NOI18N
         jButton22.setText("Edit");
         jButton22.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -796,6 +808,7 @@ DefaultTableModel dm;
             }
         });
 
+        jButton24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Delete.png"))); // NOI18N
         jButton24.setText("Delete");
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
@@ -828,7 +841,7 @@ DefaultTableModel dm;
                     .addComponent(jLabel21))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton22)
                     .addComponent(jButton24))
@@ -837,17 +850,18 @@ DefaultTableModel dm;
 
         LocalHazard.addTab("Service Within Area", jPanel8);
 
-        jPanel9.setBackground(new java.awt.Color(102, 0, 102));
+        jPanel9.setBackground(new java.awt.Color(153, 153, 153));
 
         jLabel23.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        jLabel23.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel23.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/ID.png"))); // NOI18N
         jLabel23.setText("ID");
 
         jLabel24.setFont(new java.awt.Font("Vani", 1, 18)); // NOI18N
-        jLabel24.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel24.setForeground(new java.awt.Color(51, 51, 51));
         jLabel24.setText("0");
 
-        jTable7.setBackground(new java.awt.Color(240, 240, 240));
+        jTable7.setBackground(new java.awt.Color(153, 153, 153));
         jTable7.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -861,6 +875,7 @@ DefaultTableModel dm;
         ));
         jScrollPane8.setViewportView(jTable7);
 
+        jButton26.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Edit.png"))); // NOI18N
         jButton26.setText("Edit");
         jButton26.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -868,6 +883,7 @@ DefaultTableModel dm;
             }
         });
 
+        jButton28.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Delete.png"))); // NOI18N
         jButton28.setText("Delete");
 
         jLabel29.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
@@ -907,7 +923,7 @@ DefaultTableModel dm;
                     .addComponent(jLabel23))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton26)
                     .addComponent(jButton28)
@@ -918,9 +934,9 @@ DefaultTableModel dm;
 
         LocalHazard.addTab("Agricultural Sector", jPanel9);
 
-        jPanel10.setBackground(new java.awt.Color(0, 102, 153));
+        jPanel10.setBackground(new java.awt.Color(153, 153, 153));
 
-        jTable8.setBackground(new java.awt.Color(240, 240, 240));
+        jTable8.setBackground(new java.awt.Color(153, 153, 153));
         jTable8.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -935,13 +951,15 @@ DefaultTableModel dm;
         jScrollPane9.setViewportView(jTable8);
 
         jLabel25.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        jLabel25.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel25.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel25.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/ID.png"))); // NOI18N
         jLabel25.setText("ID");
 
         jLabel26.setFont(new java.awt.Font("Vani", 1, 18)); // NOI18N
-        jLabel26.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel26.setForeground(new java.awt.Color(51, 51, 51));
         jLabel26.setText("0");
 
+        jButton30.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Edit.png"))); // NOI18N
         jButton30.setText("Edit");
         jButton30.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -949,6 +967,7 @@ DefaultTableModel dm;
             }
         });
 
+        jButton32.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Delete.png"))); // NOI18N
         jButton32.setText("Delete");
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
@@ -986,12 +1005,14 @@ DefaultTableModel dm;
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton30)
                     .addComponent(jButton32))
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         LocalHazard.addTab("LocalHazard", jPanel10);
 
-        jTable9.setBackground(new java.awt.Color(240, 240, 240));
+        jPanel11.setBackground(new java.awt.Color(153, 153, 153));
+
+        jTable9.setBackground(new java.awt.Color(153, 153, 153));
         jTable9.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -1028,7 +1049,9 @@ DefaultTableModel dm;
 
         LocalHazard.addTab("Evacuation Centers", jPanel11);
 
-        jTable10.setBackground(new java.awt.Color(240, 240, 240));
+        jPanel12.setBackground(new java.awt.Color(153, 153, 153));
+
+        jTable10.setBackground(new java.awt.Color(153, 153, 153));
         jTable10.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -1065,7 +1088,9 @@ DefaultTableModel dm;
 
         LocalHazard.addTab("Signage", jPanel12);
 
-        jTable11.setBackground(new java.awt.Color(240, 240, 240));
+        jPanel13.setBackground(new java.awt.Color(153, 153, 153));
+
+        jTable11.setBackground(new java.awt.Color(153, 153, 153));
         jTable11.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -1102,7 +1127,9 @@ DefaultTableModel dm;
 
         LocalHazard.addTab("List Of Equipment", jPanel13);
 
-        jTable12.setBackground(new java.awt.Color(240, 240, 240));
+        jPanel14.setBackground(new java.awt.Color(153, 153, 153));
+
+        jTable12.setBackground(new java.awt.Color(153, 153, 153));
         jTable12.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -1139,7 +1166,9 @@ DefaultTableModel dm;
 
         LocalHazard.addTab("Early Warning Device", jPanel14);
 
-        jTable13.setBackground(new java.awt.Color(240, 240, 240));
+        jPanel15.setBackground(new java.awt.Color(153, 153, 153));
+
+        jTable13.setBackground(new java.awt.Color(153, 153, 153));
         jTable13.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -1176,7 +1205,9 @@ DefaultTableModel dm;
 
         LocalHazard.addTab("Training & Drills", jPanel15);
 
-        jTable14.setBackground(new java.awt.Color(240, 240, 240));
+        jPanel16.setBackground(new java.awt.Color(153, 153, 153));
+
+        jTable14.setBackground(new java.awt.Color(153, 153, 153));
         jTable14.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -1242,6 +1273,7 @@ DefaultTableModel dm;
         jLabel4.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         jLabel4.setText("Year");
 
+        jPanel5.setBackground(new java.awt.Color(153, 153, 153));
         jPanel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel6.setText("Active User");
