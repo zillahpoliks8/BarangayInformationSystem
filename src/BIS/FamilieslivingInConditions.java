@@ -14,15 +14,19 @@ public class FamilieslivingInConditions {
     private String Condition;
     private String Location;
     private int Sitio;
+    private String Baranggay;
+    private String District;
     private String Date;
    
   
-    public FamilieslivingInConditions(int id,String Condition,String Location,int Sitio, String Date)
+    public FamilieslivingInConditions(int id,String Condition,String Location,int Sitio,String Baranggay, String District, String Date)
     {
     this.id = id;
     this.Condition = Condition;
     this.Location = Location;
     this.Sitio = Sitio;
+    this.Baranggay = Baranggay;
+    this.District = District;
     this.Date = Date;
     }
     
@@ -44,7 +48,17 @@ public class FamilieslivingInConditions {
     {
         return Sitio;
     }
-     public String getDate()
+    
+    public String getBaranggay()
+    {
+        return Baranggay;
+    }
+       
+    public String getDistrict()
+    {
+        return District;
+    }
+    public String getDate()
     {
         return Date;
     }

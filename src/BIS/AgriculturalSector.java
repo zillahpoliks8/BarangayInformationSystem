@@ -18,8 +18,11 @@ public class AgriculturalSector {
     private int Land_area;
     private int Livestock;
     private int Type_of_livestock;
+    private String Baranggay;
+    private String District;
+    private String Date;
      
-    public AgriculturalSector(int id, String Sitio, int Farmers, int Farm_land, int Fish_farmers, int Land_area, int Livestock, int Type_of_livestock)
+    public AgriculturalSector(int id, String Sitio, int Farmers, int Farm_land, int Fish_farmers, int Land_area, int Livestock, int Type_of_livestock, String Baranggay, String District, String Date)
     {
     this.id = id;
     this.Sitio = Sitio;
@@ -29,6 +32,9 @@ public class AgriculturalSector {
     this.Land_area = Land_area;
     this.Livestock = Livestock;
     this.Type_of_livestock = Type_of_livestock;
+    this.Baranggay= Baranggay;
+    this.District= District;
+    this.Date= Date;
     }
     
     public int getid()
@@ -65,5 +71,17 @@ public class AgriculturalSector {
     {
         return Type_of_livestock;
     }
-    
+    public String getBaranggay()
+    {
+        return Baranggay;
+    }
+     public String getDistrict()
+    {
+        return District;
+    }
+      public String getDate()
+    {
+        return Date;
+    }
+       
 }

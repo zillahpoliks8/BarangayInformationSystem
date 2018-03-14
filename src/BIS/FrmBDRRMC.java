@@ -47,6 +47,8 @@ DefaultTableModel dm;
     public FrmBDRRMC() throws SQLException, ClassNotFoundException {
         initComponents();
         ComboboxDate();
+//        ComboboxBaranggay();
+//        ComboboxDistrict();
         CreateColumns();
         this.setLocationRelativeTo(null);     
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
@@ -57,14 +59,14 @@ DefaultTableModel dm;
         txtTime.setText(s.format(d));
             if(SQLite.openDB()){
             String[][] data = SQLite.read("tblBDRRMC");
-            String[] column = {"ID","BDRRMC","Composition_of_BDRRMC","Composition","ContactNo","Position","No BDRRMC","Date"};
+            String[] column = {"ID","BDRRMC","Composition","Composition","ContactNo","Position","No BDRRMC","Baranggay","District","Date"};
             javax.swing.table.DefaultTableModel model = new javax.swing.table.DefaultTableModel(data, column);
             this.tblBDRRMC1.setModel(model);
             SQLite.closeDB();
         }
            if(SQLite.openDB()){
             String[][] data = SQLite.read("tblDOC");
-            String[] column = {"ID","Choice","txt","txt2","Location1","Location","Area","Contact","ContactInfo","Utilities1","Utilities", "Personal","Date"};
+            String[] column = {"ID","Choice","txt","txt2","Location1","Location","Area","Contact","ContactInfo","Utilities1","Utilities", "Personal","Baranggay","District","Date"};
             javax.swing.table.DefaultTableModel model = new javax.swing.table.DefaultTableModel(data, column);
             this.tblDOC1.setModel(model);
             SQLite.closeDB();
@@ -76,13 +78,55 @@ DefaultTableModel dm;
             this.tblAreas1.setModel(model);
             SQLite.closeDB();
         }
-            if(SQLite.openDB()){
+           if(SQLite.openDB()){
             String[][] data = SQLite.read("tblCondition");
-            String[] column = {"ID","Condition","Location","Sitio", "Date"};
+            String[] column = {"ID","Condition","Location","Sitio","Baranggay","District", "Date"};
             javax.swing.table.DefaultTableModel model = new javax.swing.table.DefaultTableModel(data, column);
             this.tblConditions1.setModel(model);
             SQLite.closeDB();
-        }                                                                   
+        }               
+           if(SQLite.openDB()){
+            String[][] data = SQLite.read("tblInfrastracture");
+            String[] column = {"ID","Infrastracture","Location","Sitio","Baranggay","District", "Date"};
+            javax.swing.table.DefaultTableModel model = new javax.swing.table.DefaultTableModel(data, column);
+            this.tblInfrastracture1.setModel(model);
+            SQLite.closeDB();
+        }
+            if(SQLite.openDB()){
+            String[][] data = SQLite.read("tblHazard");
+            String[] column = {"ID","Flood Hazard Map","Coastal & Island Map","LandSlide Hazard Map","Riverbanks & Waterways Map","Fire Hazard Map","Baranggay","District", "Date"};
+            javax.swing.table.DefaultTableModel model = new javax.swing.table.DefaultTableModel(data, column);
+            this.tblLocal1.setModel(model);
+            SQLite.closeDB();
+        }
+            if(SQLite.openDB()){
+            String[][] data = SQLite.read("tblServices");
+            String[] column = {"ID","Type","others","Location","Units","Baranggay","District","Date"};
+            javax.swing.table.DefaultTableModel model = new javax.swing.table.DefaultTableModel(data, column);
+            this.tblServices1.setModel(model);
+            SQLite.closeDB();
+        }
+            if(SQLite.openDB()){
+            String[][] data = SQLite.read("tblEcenters");
+            String[] column = {"ID","Type","Location","Capacity","Suitability","Availability","Baranggay","District", "Date"};
+            javax.swing.table.DefaultTableModel model = new javax.swing.table.DefaultTableModel(data, column);
+            this.tblEcenters1.setModel(model);
+            SQLite.closeDB();
+        }
+            if(SQLite.openDB()){
+            String[][] data = SQLite.read("tblSignage");
+            String[] column = {"ID","Type","Location","Units","Material_used","Baranggay","District","Date"};
+            javax.swing.table.DefaultTableModel model = new javax.swing.table.DefaultTableModel(data, column);
+            this.tblSignage1.setModel(model);
+            SQLite.closeDB();
+        }
+              if(SQLite.openDB()){
+            String[][] data = SQLite.read("tblSector");
+            String[] column = {"ID","Sitio","Farmers","Farm_land","Fish_farmers","Land_area","Livestock","Type_of_livestock","Baranggay", "District"," date"};
+            javax.swing.table.DefaultTableModel model = new javax.swing.table.DefaultTableModel(data, column);
+            this.tblSector1.setModel(model);
+            SQLite.closeDB();
+        }
             }
          
     private void CreateColumns()
@@ -112,7 +156,7 @@ DefaultTableModel dm;
     public void show_BDRRMC() throws SQLException, ClassNotFoundException{
          ArrayList<BDRRMC> list = BDRRMCList();
         DefaultTableModel model = (DefaultTableModel)tblBDRRMC1.getModel();
-        Object [] row = new Object [8];
+        Object [] row = new Object [10];
         for (int i = 1; i < list.size();i++){
             row[0] = list.get(i).getid();
             row[1] = list.get(i).getChoices();
@@ -121,15 +165,17 @@ DefaultTableModel dm;
             row[4] = list.get(i).getContactNo();
             row[5] = list.get(i).getPosition();
             row[6] = list.get(i).getNo();
-            row[7] = list.get(i).getDate();
-            model.addRow(row);          
+            row[7] = list.get(i).getBaranggay();
+            row[8] = list.get(i).getDistrict();
+            row[9] = list.get(i).getDate();
+            model.addRow(row);
         }
     }
     
     public ArrayList <BDRRMC> BDRRMCList() throws SQLException, ClassNotFoundException{
        ArrayList<BDRRMC> BDRRMCList = new ArrayList<>();
         try{
-             Class.forName("org.sqlite.JDBC");
+            Class.forName("org.sqlite.JDBC");
              String url = "jdbc:sqlite:C:\\Users\\Rannie Claire\\Documents\\NetBeansProjects\\BarangayInformationSystem\\src\\BIS\\bis.sqlite";
              conn = java.sql.DriverManager.getConnection(url);
              String query = "Select * from tblBDRRMC";
@@ -137,7 +183,7 @@ DefaultTableModel dm;
              ResultSet rs = st.executeQuery(query);
              BDRRMC bdrrmc;
              while(rs.next()){
-                 bdrrmc = new BDRRMC (rs.getInt("ID"),rs.getString("choices"),rs.getString("Composition_of_BDRRMC"),rs.getString("Composition"),rs.getString("ContactNo"),rs.getString("Position"),rs.getString("No"),rs.getString("Date"));
+                 bdrrmc = new BDRRMC (rs.getInt("ID"),rs.getString("choices"),rs.getString("Composition_of_BDRRMC"),rs.getString("Composition"),rs.getString("ContactNo"),rs.getString("Position"),rs.getString("No"),rs.getString("Baranggay"),rs.getString("District"),rs.getString("Date"));
                  BDRRMCList.add(bdrrmc);
              }
          }
@@ -202,20 +248,22 @@ DefaultTableModel dm;
         public void show_Condition() throws SQLException, ClassNotFoundException{
         ArrayList<FamilieslivingInConditions> list = ConditionsList();
         DefaultTableModel model = (DefaultTableModel)tblConditions1.getModel();
-       Object [] row = new Object [5];
+       Object [] row = new Object [7];
         for (int i = 1; i < list.size();i++){
             row[0] = list.get(i).getid();
             row[1] = list.get(i).getCondition();
             row[2] = list.get(i).getLocation();
             row[3] = list.get(i).getSitio();   
-            row[4] = list.get(i).getDate();
-            model.addRow(row);            
+            row[4] = list.get(i).getBaranggay();
+            row[5] = list.get(i).getDistrict();
+            row[6] = list.get(i).getDate();
+            model.addRow(row);           
         }
     }
     
     public ArrayList <FamilieslivingInConditions> ConditionsList() throws SQLException, ClassNotFoundException{
          ArrayList<FamilieslivingInConditions> ConditionsList = new ArrayList<>();
-           try{
+             try{
              Class.forName("org.sqlite.JDBC");
              String url = "jdbc:sqlite:C:\\Users\\Rannie Claire\\Documents\\NetBeansProjects\\BarangayInformationSystem\\src\\BIS\\bis.sqlite";
              conn = java.sql.DriverManager.getConnection(url);
@@ -224,7 +272,7 @@ DefaultTableModel dm;
              ResultSet rs = st.executeQuery(query);
              FamilieslivingInConditions conditions;
              while(rs.next()){
-                 conditions = new FamilieslivingInConditions (rs.getInt("ID"),rs.getString("Condition"),rs.getString("Location"),rs.getInt("Sitio"),rs.getString("Date"));
+                 conditions = new FamilieslivingInConditions (rs.getInt("ID"),rs.getString("Condition"),rs.getString("Location"),rs.getInt("Sitio"),rs.getString("Baranggay"),rs.getString("District"),rs.getString("Date"));
                  ConditionsList.add(conditions);
              }
          }
@@ -233,18 +281,300 @@ DefaultTableModel dm;
          }
          return ConditionsList;
     }
-         
-    private void filter (String query)
-    {
-          
-        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(dm);
-        tblBDRRMC1.setRowSorter(tr);
-        tblAreas1.setRowSorter(tr);
-        
+          public void show_Local() throws SQLException, ClassNotFoundException{ ///////#1
+        ArrayList<LocalHazardandVulnerability> list = LocalList();
+        DefaultTableModel model = (DefaultTableModel)tblLocal1.getModel();
+        Object [] row = new Object [8];
+        for (int i = 1; i < list.size();i++){
+            row[0] = list.get(i).getid();
+            row[1] = list.get(i).getChoice1();
+            row[2] = list.get(i).getChoice2();
+            row[3] = list.get(i).getChoice3();
+            row[4] = list.get(i).getChoice4();
+            row[5] = list.get(i).getChoice5();
+            row[7] = list.get(i).getDate();
+            model.addRow(row);          
+        }
     }
     
+
+      public ArrayList <LocalHazardandVulnerability> LocalList() throws SQLException, ClassNotFoundException{ /////#2
+         ArrayList<LocalHazardandVulnerability> LocalList = new ArrayList<>();
+         try{
+             Class.forName("org.sqlite.JDBC");
+             String url = "jdbc:sqlite:C:\\Users\\Rannie Claire\\Documents\\NetBeansProjects\\BarangayInformationSystem\\src\\BIS\\bis.sqlite";
+             conn = java.sql.DriverManager.getConnection(url);
+             String query = "Select * from tblHazard";
+             Statement st = conn.createStatement();
+             ResultSet rs = st.executeQuery(query);
+             LocalHazardandVulnerability local;
+             while(rs.next()){
+                 local = new LocalHazardandVulnerability (rs.getInt("ID"),rs.getString("Choice1"),rs.getString("Choice2"),rs.getString("Choice3"),rs.getString("Choice4"),rs.getString("Choice5"),rs.getString("Baranggay"),rs.getString("District"),rs.getString("Date"));
+                 LocalList.add(local);
+             }
+         }
+         catch(Exception e){
+             JOptionPane.showMessageDialog(null,e);
+         }
+         return LocalList;
+    }
+      
+       public void show_Ecenters() throws SQLException, ClassNotFoundException{
+        ArrayList<EvacuationCenters> list = EcentersList();
+        DefaultTableModel model = (DefaultTableModel)tblEcenters1.getModel();
+        Object [] row = new Object [9];
+        for (int i = 1; i < list.size();i++){
+            row[0] = list.get(i).getid();
+            row[1] = list.get(i).getType();
+            row[2] = list.get(i).getLocation();
+            row[3] = list.get(i).getCapacity();   
+            row[4] = list.get(i).getSuitability();
+            row[5] = list.get(i).getAvailability();
+            row[6] = list.get(i).getBaranggay();
+            row[7] = list.get(i).getDistrict();   
+            row[8] = list.get(i).getDate();
+            model.addRow(row);          
+        }
+    }
     
-         
+    public ArrayList <EvacuationCenters> EcentersList() throws SQLException, ClassNotFoundException{
+         ArrayList<EvacuationCenters> EcentersList = new ArrayList<>();
+         try{
+             Class.forName("org.sqlite.JDBC");
+             String url = "jdbc:sqlite:C:\\Users\\Rannie Claire\\Documents\\NetBeansProjects\\BarangayInformationSystem\\src\\BIS\\bis.sqlite";
+             conn = java.sql.DriverManager.getConnection(url);
+             String query = "Select * from tblEcenters";
+             Statement st = conn.createStatement();
+             ResultSet rs = st.executeQuery(query);
+             EvacuationCenters centers;
+             while(rs.next()){
+                 centers = new EvacuationCenters (rs.getInt("ID"),rs.getString("Type"),rs.getString("Location"),rs.getInt("Capacity"),rs.getString("Suitability"),rs.getString("Availability"),rs.getString("Baranggay"),rs.getString("District"),rs.getString("Date"));
+                 EcentersList.add(centers);
+             }
+         }
+         catch(Exception e){
+             JOptionPane.showMessageDialog(null,e);
+         }
+         return EcentersList;
+    }
+      public void show_Signage() throws SQLException, ClassNotFoundException{ ///////#1
+        ArrayList<Signage> list = SignageList();
+        DefaultTableModel model = (DefaultTableModel)tblSignage1.getModel();
+        Object [] row = new Object [8];
+        for (int i = 1; i < list.size();i++){
+            row[0] = list.get(i).getid();
+            row[1] = list.get(i).getType();
+            row[2] = list.get(i).getLocation();
+            row[3] = list.get(i).getUnits();
+            row[4] = list.get(i).getMaterial_used();
+            row[5] = list.get(i).getBaranggay();
+            row[6] = list.get(i).getDistrict();        
+            row[7] = list.get(i).getDate();
+            model.addRow(row);          
+        }
+    }
+    
+    public ArrayList <Signage> SignageList() throws SQLException, ClassNotFoundException{ /////#2
+         ArrayList<Signage> SignageList = new ArrayList<>();
+         try{
+             Class.forName("org.sqlite.JDBC");
+             String url = "jdbc:sqlite:C:\\Users\\Rannie Claire\\Documents\\NetBeansProjects\\BarangayInformationSystem\\src\\BIS\\bis.sqlite";
+             conn = java.sql.DriverManager.getConnection(url);
+             String query = "Select * from tblServices";
+             Statement st = conn.createStatement();
+             ResultSet rs = st.executeQuery(query);
+             Signage signage;
+             while(rs.next()){
+                 signage = new Signage (rs.getInt("ID"),rs.getString("Type"),rs.getString("Location"),rs.getInt("Units"),rs.getString("Material_used"),rs.getString("Baranggay"),rs.getString("District"),rs.getString("Date"));
+                 SignageList.add(signage);
+             }
+         }
+         catch(Exception e){
+             JOptionPane.showMessageDialog(null,e);
+         }
+         return SignageList;
+    }
+    
+//    private void filter (String query)
+//    {
+//         
+//        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(dm);
+//        tblBDRRMC1.setRowSorter(tr);
+//        tblAreas1.setRowSorter(tr);
+//        tblInfrastracture1.setRowSorter(tr);
+//        tblDOC1.setRowSorter(tr);
+//        tblConditions1.setRowSorter(tr);
+//        if(query != "All year") {
+//        tr.setRowFilter(RowFilter.regexFilter(query));
+//        }else
+//        {
+//        tblInfrastracture1.setRowSorter(tr);
+//        tblBDRRMC1.setRowSorter(tr);
+//        tblAreas1.setRowSorter(tr);
+//        tblDOC1.setRowSorter(tr);
+//        tblConditions1.setRowSorter(tr);
+//        }
+//    }
+    
+        public void show_Infrastructure() throws SQLException, ClassNotFoundException{
+        ArrayList<GovernmentInfrastracture> list = InfrastractureList();
+        DefaultTableModel model = (DefaultTableModel)tblInfrastracture1.getModel();
+        Object [] row = new Object [7];
+        for (int i = 1; i < list.size();i++){
+            row[0] = list.get(i).getid();
+            row[1] = list.get(i).getInfrastructure();
+            row[2] = list.get(i).getLocation();
+            row[3] = list.get(i).getSitio();   
+            row[4] = list.get(i).getBaranggay();
+            row[5] = list.get(i).getDistrict();
+            row[6] = list.get(i).getDate();
+            model.addRow(row);          
+        }
+    }
+    
+    public ArrayList <GovernmentInfrastracture> InfrastractureList() throws SQLException, ClassNotFoundException{
+         ArrayList<GovernmentInfrastracture> InfrastractureList = new ArrayList<>();
+         try{
+             Class.forName("org.sqlite.JDBC");
+             String url = "jdbc:sqlite:C:\\Users\\Rannie Claire\\Documents\\NetBeansProjects\\BarangayInformationSystem\\src\\BIS\\bis.sqlite";
+             conn = java.sql.DriverManager.getConnection(url);
+             String query = "Select * from tblInfrastracture";
+             Statement st = conn.createStatement();
+             ResultSet rs = st.executeQuery(query);
+             GovernmentInfrastracture Infrastracture;
+             while(rs.next()){
+                 Infrastracture = new GovernmentInfrastracture (rs.getInt("ID"),rs.getString("Infrastracture"),rs.getString("Location"),rs.getInt("Sitio"),rs.getString("Baranggay"),rs.getString("District"),rs.getString("Date"));
+                 InfrastractureList.add(Infrastracture);
+             }
+         }
+         catch(Exception e){
+             JOptionPane.showMessageDialog(null,e);
+         }
+         return InfrastractureList;
+    }
+      
+     public void show_Service() throws SQLException, ClassNotFoundException{ ///////#1
+        ArrayList<ServiceInArea> list = ServiceList();
+        DefaultTableModel model = (DefaultTableModel)tblServices1.getModel();
+        Object [] row = new Object [8];
+        for (int i = 1; i < list.size();i++){
+            row[0] = list.get(i).getid();
+            row[1] = list.get(i).getType();
+            row[2] = list.get(i).getOthers();
+            row[3] = list.get(i).getLocation();
+            row[4] = list.get(i).getUnits();
+            row[5] = list.get(i).getBaranggay();
+            row[6] = list.get(i).getDistrict();        
+            row[7] = list.get(i).getDate();
+            model.addRow(row);          
+        }
+    }
+    
+    public ArrayList <ServiceInArea> ServiceList() throws SQLException, ClassNotFoundException{ /////#2
+         ArrayList<ServiceInArea> ServiceList = new ArrayList<>();
+         try{
+             Class.forName("org.sqlite.JDBC");
+             String url = "jdbc:sqlite:C:\\Users\\Rannie Claire\\Documents\\NetBeansProjects\\BarangayInformationSystem\\src\\BIS\\bis.sqlite";
+             conn = java.sql.DriverManager.getConnection(url);
+             String query = "Select * from tblServices";
+             Statement st = conn.createStatement();
+             ResultSet rs = st.executeQuery(query);
+             ServiceInArea service;
+             while(rs.next()){
+                 service = new ServiceInArea (rs.getInt("ID"),rs.getString("Type"),rs.getString("others"),rs.getString("Location"),rs.getInt("Units"),rs.getString("Baranggay"),rs.getString("District"),rs.getString("Date"));
+                 ServiceList.add(service);
+             }
+         }
+         catch(Exception e){
+             JOptionPane.showMessageDialog(null,e);
+         }
+         return ServiceList;
+    }
+           public void show_DOC() throws SQLException, ClassNotFoundException{
+        ArrayList<DisasterOperationsCenter> list = DOCList();
+        DefaultTableModel model = (DefaultTableModel)tblDOC1.getModel();
+        Object [] row = new Object [15];
+        for (int i = 1; i < list.size();i++){
+            row[0] = list.get(i).getid();
+            row[1] = list.get(i).getChoice(); 
+            row[2] = list.get(i).getTxt();
+            row[3] = list.get(i).getTxt2();
+            row[4] = list.get(i).getLocation();
+            row[5] = list.get(i).getLocation1();
+            row[6] = list.get(i).getArea();
+            row[7] = list.get(i).getContactNo();
+            row[8] = list.get(i).getContactNo1();
+            row[9] = list.get(i).getUtilities();
+            row[10] = list.get(i).getUtilities1();
+            row[11] = list.get(i).getPersonal();  
+            row[12] = list.get(i).getBaranggay(); 
+            row[13] = list.get(i).getDistrict(); 
+            row[14] = list.get(i).getDate();
+            model.addRow(row);          
+        }
+    }
+    
+    public ArrayList <DisasterOperationsCenter> DOCList() throws SQLException, ClassNotFoundException{
+         ArrayList<DisasterOperationsCenter> DOCList = new ArrayList<>();
+         try{
+             Class.forName("org.sqlite.JDBC");
+             String url = "jdbc:sqlite:C:\\Users\\Rannie Claire\\Documents\\NetBeansProjects\\BarangayInformationSystem\\src\\BIS\\bis.sqlite";
+             conn = java.sql.DriverManager.getConnection(url);
+             String query = "Select * from tblDOC";
+             Statement st = conn.createStatement();
+             ResultSet rs = st.executeQuery(query);
+             DisasterOperationsCenter doc;
+             while(rs.next()){
+                 doc = new DisasterOperationsCenter (rs.getInt("ID"),rs.getString("Choice"),rs.getString("txt"),rs.getString("txt2"),rs.getString("Location"),rs.getString("Location1"),rs.getString("Area"),rs.getString("ContactNo"),rs.getString("ContactNo1"),rs.getString("Utilities"),rs.getString("Utilities1"),rs.getString("Personal"),rs.getString("Baranggay"),rs.getString("District"),rs.getString("Date"));
+                 DOCList.add(doc);
+             }
+         }
+         catch(Exception e){
+             JOptionPane.showMessageDialog(null,e);
+         }
+         return DOCList;
+    }
+     
+          public void show_Sector() throws SQLException, ClassNotFoundException{ ///////#1
+        ArrayList<AgriculturalSector> list = SectorList();
+        DefaultTableModel model = (DefaultTableModel)tblSector1.getModel();
+        Object [] row = new Object [11];
+        for (int i = 1; i < list.size();i++){
+            row[0] = list.get(i).getid();
+            row[1] = list.get(i).getSitio();
+            row[2] = list.get(i).getFarmers();
+            row[3] = list.get(i).getFarm_land();
+            row[4] = list.get(i).getFish_farmers();
+            row[5] = list.get(i).getLand_area();
+            row[6] = list.get(i).getLivestock();
+            row[7] = list.get(i).getType_of_livestock();
+            row[8] = list.get(i).getBaranggay();
+            row[9] = list.get(i).getDistrict();        
+            row[10] = list.get(i).getDate();
+            model.addRow(row);          
+        }
+    }
+    
+    public ArrayList <AgriculturalSector> SectorList() throws SQLException, ClassNotFoundException{ /////#2
+         ArrayList<AgriculturalSector> SectorList = new ArrayList<>();
+         try{
+             Class.forName("org.sqlite.JDBC");
+             String url = "jdbc:sqlite:C:\\Users\\Rannie Claire\\Documents\\NetBeansProjects\\BarangayInformationSystem\\src\\BIS\\bis.sqlite";
+             conn = java.sql.DriverManager.getConnection(url);
+             String query = "Select * from tblSector";
+             Statement st = conn.createStatement();
+             ResultSet rs = st.executeQuery(query);
+             AgriculturalSector sector;
+             while(rs.next()){
+                 sector = new AgriculturalSector (rs.getInt("ID"),rs.getString("Sitio"),rs.getInt("Farmers"),rs.getInt("Farm_land"),rs.getInt("Fish_farmers"),rs.getInt("Land_area"),rs.getInt("Livestock"),rs.getInt("Type_of_livestock"),rs.getString("Baranggay"),rs.getString("District"),rs.getString("Date"));
+                 SectorList.add(sector);
+             }
+         }
+         catch(Exception e){
+             JOptionPane.showMessageDialog(null,e);
+         }
+         return SectorList;
+    }
      
     /**
      * This method is called from within the constructor to initialize the form.
@@ -290,53 +620,18 @@ DefaultTableModel dm;
         jLabel17 = new javax.swing.JLabel();
         txtID4 = new javax.swing.JLabel();
         jScrollPane6 = new javax.swing.JScrollPane();
-        tblFacilities1 = new javax.swing.JTable();
+        tblInfrastracture1 = new javax.swing.JTable();
         jButton18 = new javax.swing.JButton();
         jButton20 = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         jScrollPane7 = new javax.swing.JScrollPane();
-        jTable6 = new javax.swing.JTable();
+        tblServices1 = new javax.swing.JTable();
         jButton22 = new javax.swing.JButton();
         jButton24 = new javax.swing.JButton();
-        jPanel9 = new javax.swing.JPanel();
-        jLabel23 = new javax.swing.JLabel();
-        jLabel24 = new javax.swing.JLabel();
-        jScrollPane8 = new javax.swing.JScrollPane();
-        jTable7 = new javax.swing.JTable();
-        jButton26 = new javax.swing.JButton();
-        jButton28 = new javax.swing.JButton();
-        jLabel29 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
-        jPanel10 = new javax.swing.JPanel();
-        jScrollPane9 = new javax.swing.JScrollPane();
-        jTable8 = new javax.swing.JTable();
-        jLabel25 = new javax.swing.JLabel();
-        jLabel26 = new javax.swing.JLabel();
-        jButton30 = new javax.swing.JButton();
-        jButton32 = new javax.swing.JButton();
-        jPanel11 = new javax.swing.JPanel();
-        jScrollPane12 = new javax.swing.JScrollPane();
-        jTable9 = new javax.swing.JTable();
-        jPanel12 = new javax.swing.JPanel();
-        jScrollPane13 = new javax.swing.JScrollPane();
-        jTable10 = new javax.swing.JTable();
-        jPanel13 = new javax.swing.JPanel();
-        jScrollPane14 = new javax.swing.JScrollPane();
-        jTable11 = new javax.swing.JTable();
-        jPanel14 = new javax.swing.JPanel();
-        jScrollPane15 = new javax.swing.JScrollPane();
-        jTable12 = new javax.swing.JTable();
-        jPanel15 = new javax.swing.JPanel();
-        jScrollPane16 = new javax.swing.JScrollPane();
-        jTable13 = new javax.swing.JTable();
-        jPanel16 = new javax.swing.JPanel();
-        jScrollPane17 = new javax.swing.JScrollPane();
-        jTable14 = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -344,11 +639,72 @@ DefaultTableModel dm;
         txtTime = new javax.swing.JLabel();
         txtDate = new javax.swing.JLabel();
         txtActiveUser = new javax.swing.JLabel();
-        ComboBoxDate = new javax.swing.JComboBox<>();
         jButton41 = new javax.swing.JButton();
+        ComboBoxDate = new javax.swing.JComboBox<>();
+        jLabel4 = new javax.swing.JLabel();
+        txtB = new javax.swing.JLabel();
+        txtD = new javax.swing.JLabel();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jPanel17 = new javax.swing.JPanel();
+        jLabel27 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
+        jScrollPane18 = new javax.swing.JScrollPane();
+        tblSector1 = new javax.swing.JTable();
+        jLabel31 = new javax.swing.JLabel();
+        jButton27 = new javax.swing.JButton();
+        jButton29 = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        jPanel18 = new javax.swing.JPanel();
+        jLabel32 = new javax.swing.JLabel();
+        jLabel34 = new javax.swing.JLabel();
+        jScrollPane24 = new javax.swing.JScrollPane();
+        tblLocal1 = new javax.swing.JTable();
+        jButton31 = new javax.swing.JButton();
+        jButton33 = new javax.swing.JButton();
+        jPanel19 = new javax.swing.JPanel();
+        jLabel35 = new javax.swing.JLabel();
+        jLabel36 = new javax.swing.JLabel();
+        jScrollPane25 = new javax.swing.JScrollPane();
+        tblEcenters1 = new javax.swing.JTable();
+        jButton35 = new javax.swing.JButton();
+        jButton37 = new javax.swing.JButton();
+        jPanel20 = new javax.swing.JPanel();
+        jLabel37 = new javax.swing.JLabel();
+        jLabel38 = new javax.swing.JLabel();
+        jScrollPane26 = new javax.swing.JScrollPane();
+        tblSignage1 = new javax.swing.JTable();
+        jButton38 = new javax.swing.JButton();
+        jButton39 = new javax.swing.JButton();
+        jPanel21 = new javax.swing.JPanel();
+        jLabel39 = new javax.swing.JLabel();
+        jLabel40 = new javax.swing.JLabel();
+        jScrollPane27 = new javax.swing.JScrollPane();
+        jTable21 = new javax.swing.JTable();
+        jButton40 = new javax.swing.JButton();
+        jButton42 = new javax.swing.JButton();
+        jPanel22 = new javax.swing.JPanel();
+        jLabel41 = new javax.swing.JLabel();
+        jLabel42 = new javax.swing.JLabel();
+        jScrollPane28 = new javax.swing.JScrollPane();
+        jTable22 = new javax.swing.JTable();
+        jButton43 = new javax.swing.JButton();
+        jButton44 = new javax.swing.JButton();
+        jPanel23 = new javax.swing.JPanel();
+        jLabel43 = new javax.swing.JLabel();
+        jLabel44 = new javax.swing.JLabel();
+        jScrollPane29 = new javax.swing.JScrollPane();
+        jTable23 = new javax.swing.JTable();
+        jButton45 = new javax.swing.JButton();
+        jButton46 = new javax.swing.JButton();
+        jPanel24 = new javax.swing.JPanel();
+        jLabel45 = new javax.swing.JLabel();
+        jLabel46 = new javax.swing.JLabel();
+        jScrollPane30 = new javax.swing.JScrollPane();
+        jTable24 = new javax.swing.JTable();
+        jButton47 = new javax.swing.JButton();
+        jButton48 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
 
@@ -359,11 +715,9 @@ DefaultTableModel dm;
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("MAIN");
 
-        LocalHazard.setBackground(new java.awt.Color(153, 153, 153));
+        LocalHazard.setBackground(new java.awt.Color(0, 0, 0));
 
-        jPanel1.setBackground(new java.awt.Color(153, 153, 153));
-
-        tblBDRRMC1.setBackground(new java.awt.Color(153, 153, 153));
+        tblBDRRMC1.setBackground(new java.awt.Color(240, 240, 240));
         tblBDRRMC1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
@@ -383,10 +737,8 @@ DefaultTableModel dm;
         jScrollPane11.setViewportView(tblBDRRMC1);
 
         jLabel33.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        jLabel33.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/ID.png"))); // NOI18N
         jLabel33.setText("ID");
 
-        btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Delete.png"))); // NOI18N
         btnDelete.setText("Delete");
         btnDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -394,7 +746,6 @@ DefaultTableModel dm;
             }
         });
 
-        btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Edit.png"))); // NOI18N
         btnAdd.setText("Edit");
         btnAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -403,50 +754,47 @@ DefaultTableModel dm;
         });
 
         txtID.setFont(new java.awt.Font("Vani", 1, 18)); // NOI18N
-        txtID.setForeground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addComponent(jLabel33)
+                .addGap(18, 18, 18)
+                .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(809, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane11, javax.swing.GroupLayout.DEFAULT_SIZE, 942, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addComponent(jLabel33)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnAdd)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnDelete)))
+                        .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnDelete))
+                    .addComponent(jScrollPane11))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel33)
-                    .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel33, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
+                .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAdd)
                     .addComponent(btnDelete))
-                .addGap(30, 30, 30))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         LocalHazard.addTab("BDRRMC", jPanel1);
 
-        jPanel2.setBackground(new java.awt.Color(153, 153, 153));
-
-        tblDOC1.setBackground(new java.awt.Color(153, 153, 153));
+        tblDOC1.setBackground(new java.awt.Color(240, 240, 240));
         tblDOC1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -467,13 +815,10 @@ DefaultTableModel dm;
 
         jLabel30.setBackground(new java.awt.Color(255, 255, 255));
         jLabel30.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        jLabel30.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/ID.png"))); // NOI18N
         jLabel30.setText("ID");
 
         txtID1.setFont(new java.awt.Font("Vani", 1, 18)); // NOI18N
-        txtID1.setForeground(new java.awt.Color(255, 255, 255));
 
-        jButton34.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Edit.png"))); // NOI18N
         jButton34.setText("Edit");
         jButton34.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -481,7 +826,6 @@ DefaultTableModel dm;
             }
         });
 
-        jButton36.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Delete.png"))); // NOI18N
         jButton36.setText("Delete");
         jButton36.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -496,19 +840,20 @@ DefaultTableModel dm;
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 942, Short.MAX_VALUE)
+                    .addComponent(jScrollPane10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 922, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(22, 22, 22)
                         .addComponent(jLabel30)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtID1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton34)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton36)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton34)
+                .addGap(18, 18, 18)
+                .addComponent(jButton36)
+                .addGap(12, 12, 12))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -517,24 +862,21 @@ DefaultTableModel dm;
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel30)
                     .addComponent(txtID1, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton34)
                     .addComponent(jButton36))
-                .addGap(38, 38, 38))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         LocalHazard.addTab("Disaster Operations Center", jPanel2);
 
-        jPanel3.setBackground(new java.awt.Color(153, 153, 153));
-
         jLabel11.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/ID.png"))); // NOI18N
         jLabel11.setText("ID");
 
-        tblAreas1.setBackground(new java.awt.Color(153, 153, 153));
+        tblAreas1.setBackground(new java.awt.Color(240, 240, 240));
         tblAreas1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -556,7 +898,6 @@ DefaultTableModel dm;
         txtID2.setFont(new java.awt.Font("Vani", 1, 18)); // NOI18N
         txtID2.setText("0");
 
-        jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Edit.png"))); // NOI18N
         jButton10.setText("Edit");
         jButton10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -564,7 +905,6 @@ DefaultTableModel dm;
             }
         });
 
-        jButton12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Delete.png"))); // NOI18N
         jButton12.setText("Delete");
         jButton12.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -582,9 +922,9 @@ DefaultTableModel dm;
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton10)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton12))
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 942, Short.MAX_VALUE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 922, Short.MAX_VALUE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(25, 25, 25)
                         .addComponent(jLabel11)
@@ -600,9 +940,9 @@ DefaultTableModel dm;
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
                     .addComponent(txtID2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton10)
                     .addComponent(jButton12))
@@ -611,18 +951,13 @@ DefaultTableModel dm;
 
         LocalHazard.addTab("Prone Areas", jPanel3);
 
-        jPanel6.setBackground(new java.awt.Color(153, 153, 153));
-
         jLabel14.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        jLabel14.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/ID.png"))); // NOI18N
         jLabel14.setText("ID");
 
         txtID3.setFont(new java.awt.Font("Vani", 1, 18)); // NOI18N
-        txtID3.setForeground(new java.awt.Color(51, 51, 51));
         txtID3.setText("0");
 
-        tblConditions1.setBackground(new java.awt.Color(153, 153, 153));
+        tblConditions1.setBackground(new java.awt.Color(240, 240, 240));
         tblConditions1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -641,8 +976,6 @@ DefaultTableModel dm;
         });
         jScrollPane5.setViewportView(tblConditions1);
 
-        jButton14.setForeground(new java.awt.Color(51, 51, 51));
-        jButton14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Edit.png"))); // NOI18N
         jButton14.setText("Edit");
         jButton14.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -650,7 +983,6 @@ DefaultTableModel dm;
             }
         });
 
-        jButton16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Delete.png"))); // NOI18N
         jButton16.setText("Delete");
         jButton16.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -665,7 +997,7 @@ DefaultTableModel dm;
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 942, Short.MAX_VALUE)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 922, Short.MAX_VALUE)
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addComponent(jLabel14)
@@ -687,9 +1019,9 @@ DefaultTableModel dm;
                     .addComponent(jLabel14)
                     .addComponent(txtID3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton14)
                     .addComponent(jButton16))
                 .addGap(38, 38, 38))
@@ -697,17 +1029,14 @@ DefaultTableModel dm;
 
         LocalHazard.addTab("Conditions", jPanel6);
 
-        jPanel7.setBackground(new java.awt.Color(153, 153, 153));
-
         jLabel17.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/ID.png"))); // NOI18N
         jLabel17.setText("ID");
 
         txtID4.setFont(new java.awt.Font("Vani", 1, 18)); // NOI18N
         txtID4.setText("0");
 
-        tblFacilities1.setBackground(new java.awt.Color(153, 153, 153));
-        tblFacilities1.setModel(new javax.swing.table.DefaultTableModel(
+        tblInfrastracture1.setBackground(new java.awt.Color(240, 240, 240));
+        tblInfrastracture1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -718,9 +1047,13 @@ DefaultTableModel dm;
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane6.setViewportView(tblFacilities1);
+        tblInfrastracture1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblInfrastracture1MouseClicked(evt);
+            }
+        });
+        jScrollPane6.setViewportView(tblInfrastracture1);
 
-        jButton18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Edit.png"))); // NOI18N
         jButton18.setText("Edit");
         jButton18.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -728,7 +1061,6 @@ DefaultTableModel dm;
             }
         });
 
-        jButton20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Delete.png"))); // NOI18N
         jButton20.setText("Delete");
         jButton20.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -754,7 +1086,7 @@ DefaultTableModel dm;
                         .addComponent(jButton18)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton20))
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 942, Short.MAX_VALUE))
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 922, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
@@ -765,8 +1097,8 @@ DefaultTableModel dm;
                     .addComponent(jLabel17)
                     .addComponent(txtID4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton18)
                     .addComponent(jButton20))
@@ -775,19 +1107,14 @@ DefaultTableModel dm;
 
         LocalHazard.addTab("Government Infrastracture", jPanel7);
 
-        jPanel8.setBackground(new java.awt.Color(153, 153, 153));
-
-        jLabel20.setBackground(new java.awt.Color(0, 0, 0));
         jLabel20.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/ID.png"))); // NOI18N
         jLabel20.setText("ID");
 
-        jLabel21.setBackground(new java.awt.Color(0, 0, 0));
         jLabel21.setFont(new java.awt.Font("Vani", 1, 18)); // NOI18N
         jLabel21.setText("0");
 
-        jTable6.setBackground(new java.awt.Color(153, 153, 153));
-        jTable6.setModel(new javax.swing.table.DefaultTableModel(
+        tblServices1.setBackground(new java.awt.Color(240, 240, 240));
+        tblServices1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -798,9 +1125,8 @@ DefaultTableModel dm;
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane7.setViewportView(jTable6);
+        jScrollPane7.setViewportView(tblServices1);
 
-        jButton22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Edit.png"))); // NOI18N
         jButton22.setText("Edit");
         jButton22.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -808,7 +1134,6 @@ DefaultTableModel dm;
             }
         });
 
-        jButton24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Delete.png"))); // NOI18N
         jButton24.setText("Delete");
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
@@ -816,20 +1141,21 @@ DefaultTableModel dm;
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
+                        .addGap(32, 32, 32)
                         .addComponent(jLabel20)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel21)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addContainerGap(812, Short.MAX_VALUE)
                         .addComponent(jButton22)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton24))
-                    .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 942, Short.MAX_VALUE))
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 922, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel8Layout.setVerticalGroup(
@@ -839,410 +1165,16 @@ DefaultTableModel dm;
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel20)
                     .addComponent(jLabel21))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton22)
                     .addComponent(jButton24))
-                .addGap(38, 38, 38))
+                .addGap(60, 60, 60))
         );
 
         LocalHazard.addTab("Service Within Area", jPanel8);
-
-        jPanel9.setBackground(new java.awt.Color(153, 153, 153));
-
-        jLabel23.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        jLabel23.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/ID.png"))); // NOI18N
-        jLabel23.setText("ID");
-
-        jLabel24.setFont(new java.awt.Font("Vani", 1, 18)); // NOI18N
-        jLabel24.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel24.setText("0");
-
-        jTable7.setBackground(new java.awt.Color(153, 153, 153));
-        jTable7.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane8.setViewportView(jTable7);
-
-        jButton26.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Edit.png"))); // NOI18N
-        jButton26.setText("Edit");
-        jButton26.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton26ActionPerformed(evt);
-            }
-        });
-
-        jButton28.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Delete.png"))); // NOI18N
-        jButton28.setText("Delete");
-
-        jLabel29.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        jLabel29.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel29.setText("Grand Total");
-
-        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
-        jPanel9.setLayout(jPanel9Layout);
-        jPanel9Layout.setHorizontalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 942, Short.MAX_VALUE)
-                    .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addComponent(jLabel29)
-                        .addGap(33, 33, 33)
-                        .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton26)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton28))
-                    .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addComponent(jLabel23)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel24)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        jPanel9Layout.setVerticalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel24)
-                    .addComponent(jLabel23))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton26)
-                    .addComponent(jButton28)
-                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel29))
-                .addGap(38, 38, 38))
-        );
-
-        LocalHazard.addTab("Agricultural Sector", jPanel9);
-
-        jPanel10.setBackground(new java.awt.Color(153, 153, 153));
-
-        jTable8.setBackground(new java.awt.Color(153, 153, 153));
-        jTable8.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane9.setViewportView(jTable8);
-
-        jLabel25.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        jLabel25.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel25.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/ID.png"))); // NOI18N
-        jLabel25.setText("ID");
-
-        jLabel26.setFont(new java.awt.Font("Vani", 1, 18)); // NOI18N
-        jLabel26.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel26.setText("0");
-
-        jButton30.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Edit.png"))); // NOI18N
-        jButton30.setText("Edit");
-        jButton30.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton30ActionPerformed(evt);
-            }
-        });
-
-        jButton32.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Delete.png"))); // NOI18N
-        jButton32.setText("Delete");
-
-        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
-        jPanel10.setLayout(jPanel10Layout);
-        jPanel10Layout.setHorizontalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(jLabel25)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel26)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 942, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton30)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton32)))
-                .addContainerGap())
-        );
-        jPanel10Layout.setVerticalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel25)
-                    .addComponent(jLabel26))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton30)
-                    .addComponent(jButton32))
-                .addContainerGap(17, Short.MAX_VALUE))
-        );
-
-        LocalHazard.addTab("LocalHazard", jPanel10);
-
-        jPanel11.setBackground(new java.awt.Color(153, 153, 153));
-
-        jTable9.setBackground(new java.awt.Color(153, 153, 153));
-        jTable9.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane12.setViewportView(jTable9);
-
-        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
-        jPanel11.setLayout(jPanel11Layout);
-        jPanel11Layout.setHorizontalGroup(
-            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 962, Short.MAX_VALUE)
-            .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel11Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jScrollPane12, javax.swing.GroupLayout.DEFAULT_SIZE, 942, Short.MAX_VALUE)
-                    .addContainerGap()))
-        );
-        jPanel11Layout.setVerticalGroup(
-            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 423, Short.MAX_VALUE)
-            .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel11Layout.createSequentialGroup()
-                    .addGap(70, 70, 70)
-                    .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(55, Short.MAX_VALUE)))
-        );
-
-        LocalHazard.addTab("Evacuation Centers", jPanel11);
-
-        jPanel12.setBackground(new java.awt.Color(153, 153, 153));
-
-        jTable10.setBackground(new java.awt.Color(153, 153, 153));
-        jTable10.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane13.setViewportView(jTable10);
-
-        javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
-        jPanel12.setLayout(jPanel12Layout);
-        jPanel12Layout.setHorizontalGroup(
-            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 962, Short.MAX_VALUE)
-            .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel12Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jScrollPane13, javax.swing.GroupLayout.DEFAULT_SIZE, 942, Short.MAX_VALUE)
-                    .addContainerGap()))
-        );
-        jPanel12Layout.setVerticalGroup(
-            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 423, Short.MAX_VALUE)
-            .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel12Layout.createSequentialGroup()
-                    .addGap(70, 70, 70)
-                    .addComponent(jScrollPane13, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(55, Short.MAX_VALUE)))
-        );
-
-        LocalHazard.addTab("Signage", jPanel12);
-
-        jPanel13.setBackground(new java.awt.Color(153, 153, 153));
-
-        jTable11.setBackground(new java.awt.Color(153, 153, 153));
-        jTable11.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane14.setViewportView(jTable11);
-
-        javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
-        jPanel13.setLayout(jPanel13Layout);
-        jPanel13Layout.setHorizontalGroup(
-            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 962, Short.MAX_VALUE)
-            .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel13Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jScrollPane14, javax.swing.GroupLayout.DEFAULT_SIZE, 942, Short.MAX_VALUE)
-                    .addContainerGap()))
-        );
-        jPanel13Layout.setVerticalGroup(
-            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 423, Short.MAX_VALUE)
-            .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel13Layout.createSequentialGroup()
-                    .addGap(70, 70, 70)
-                    .addComponent(jScrollPane14, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(55, Short.MAX_VALUE)))
-        );
-
-        LocalHazard.addTab("List Of Equipment", jPanel13);
-
-        jPanel14.setBackground(new java.awt.Color(153, 153, 153));
-
-        jTable12.setBackground(new java.awt.Color(153, 153, 153));
-        jTable12.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane15.setViewportView(jTable12);
-
-        javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
-        jPanel14.setLayout(jPanel14Layout);
-        jPanel14Layout.setHorizontalGroup(
-            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 962, Short.MAX_VALUE)
-            .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel14Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jScrollPane15, javax.swing.GroupLayout.DEFAULT_SIZE, 942, Short.MAX_VALUE)
-                    .addContainerGap()))
-        );
-        jPanel14Layout.setVerticalGroup(
-            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 423, Short.MAX_VALUE)
-            .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel14Layout.createSequentialGroup()
-                    .addGap(70, 70, 70)
-                    .addComponent(jScrollPane15, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(55, Short.MAX_VALUE)))
-        );
-
-        LocalHazard.addTab("Early Warning Device", jPanel14);
-
-        jPanel15.setBackground(new java.awt.Color(153, 153, 153));
-
-        jTable13.setBackground(new java.awt.Color(153, 153, 153));
-        jTable13.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane16.setViewportView(jTable13);
-
-        javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
-        jPanel15.setLayout(jPanel15Layout);
-        jPanel15Layout.setHorizontalGroup(
-            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 962, Short.MAX_VALUE)
-            .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel15Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jScrollPane16, javax.swing.GroupLayout.DEFAULT_SIZE, 942, Short.MAX_VALUE)
-                    .addContainerGap()))
-        );
-        jPanel15Layout.setVerticalGroup(
-            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 423, Short.MAX_VALUE)
-            .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel15Layout.createSequentialGroup()
-                    .addGap(70, 70, 70)
-                    .addComponent(jScrollPane16, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(55, Short.MAX_VALUE)))
-        );
-
-        LocalHazard.addTab("Training & Drills", jPanel15);
-
-        jPanel16.setBackground(new java.awt.Color(153, 153, 153));
-
-        jTable14.setBackground(new java.awt.Color(153, 153, 153));
-        jTable14.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane17.setViewportView(jTable14);
-
-        javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
-        jPanel16.setLayout(jPanel16Layout);
-        jPanel16Layout.setHorizontalGroup(
-            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 962, Short.MAX_VALUE)
-            .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel16Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jScrollPane17, javax.swing.GroupLayout.DEFAULT_SIZE, 942, Short.MAX_VALUE)
-                    .addContainerGap()))
-        );
-        jPanel16Layout.setVerticalGroup(
-            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 423, Short.MAX_VALUE)
-            .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel16Layout.createSequentialGroup()
-                    .addGap(70, 70, 70)
-                    .addComponent(jScrollPane17, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(55, Short.MAX_VALUE)))
-        );
-
-        LocalHazard.addTab("Emergency Kit", jPanel16);
 
         jPanel4.setBackground(new java.awt.Color(51, 51, 51));
         jPanel4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -1270,10 +1202,6 @@ DefaultTableModel dm;
                 .addContainerGap())
         );
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        jLabel4.setText("Year");
-
-        jPanel5.setBackground(new java.awt.Color(153, 153, 153));
         jPanel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel6.setText("Active User");
@@ -1291,7 +1219,7 @@ DefaultTableModel dm;
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txtActiveUser, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46)
+                .addGap(52, 52, 52)
                 .addComponent(jLabel7)
                 .addGap(18, 18, 18)
                 .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1304,7 +1232,7 @@ DefaultTableModel dm;
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap(22, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtActiveUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -1315,6 +1243,8 @@ DefaultTableModel dm;
                     .addComponent(txtDate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
+
+        jButton41.setText("Print");
 
         ComboBoxDate.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -1327,7 +1257,606 @@ DefaultTableModel dm;
             }
         });
 
-        jButton41.setText("Print");
+        jLabel4.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        jLabel4.setText("Year");
+
+        txtB.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+
+        txtD.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+
+        jLabel27.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jLabel27.setText("ID");
+
+        jLabel28.setFont(new java.awt.Font("Vani", 1, 18)); // NOI18N
+        jLabel28.setText("0");
+
+        tblSector1.setBackground(new java.awt.Color(240, 240, 240));
+        tblSector1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane18.setViewportView(tblSector1);
+
+        jLabel31.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jLabel31.setText("Grand Total");
+
+        jButton27.setText("Edit");
+        jButton27.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton27ActionPerformed(evt);
+            }
+        });
+
+        jButton29.setText("Delete");
+
+        javax.swing.GroupLayout jPanel17Layout = new javax.swing.GroupLayout(jPanel17);
+        jPanel17.setLayout(jPanel17Layout);
+        jPanel17Layout.setHorizontalGroup(
+            jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel17Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane18, javax.swing.GroupLayout.DEFAULT_SIZE, 922, Short.MAX_VALUE)
+                    .addGroup(jPanel17Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel31)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton27)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton29))
+                    .addGroup(jPanel17Layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(jLabel27)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel28)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel17Layout.setVerticalGroup(
+            jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel17Layout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel28)
+                    .addComponent(jLabel27))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane18, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton27)
+                    .addComponent(jButton29)
+                    .addComponent(jLabel31)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(38, 38, 38))
+        );
+
+        jTabbedPane1.addTab("Agricultural Sector", jPanel17);
+
+        jLabel32.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jLabel32.setText("ID");
+
+        jLabel34.setFont(new java.awt.Font("Vani", 1, 18)); // NOI18N
+        jLabel34.setText("0");
+
+        tblLocal1.setBackground(new java.awt.Color(240, 240, 240));
+        tblLocal1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane24.setViewportView(tblLocal1);
+
+        jButton31.setText("Edit");
+        jButton31.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton31ActionPerformed(evt);
+            }
+        });
+
+        jButton33.setText("Delete");
+
+        javax.swing.GroupLayout jPanel18Layout = new javax.swing.GroupLayout(jPanel18);
+        jPanel18.setLayout(jPanel18Layout);
+        jPanel18Layout.setHorizontalGroup(
+            jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 952, Short.MAX_VALUE)
+            .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel18Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane24)
+                        .addGroup(jPanel18Layout.createSequentialGroup()
+                            .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel18Layout.createSequentialGroup()
+                                    .addGap(812, 812, 812)
+                                    .addComponent(jButton31)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jButton33))
+                                .addGroup(jPanel18Layout.createSequentialGroup()
+                                    .addGap(17, 17, 17)
+                                    .addComponent(jLabel32)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(jLabel34)))
+                            .addGap(0, 0, Short.MAX_VALUE)))
+                    .addContainerGap()))
+        );
+        jPanel18Layout.setVerticalGroup(
+            jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 255, Short.MAX_VALUE)
+            .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel18Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel34)
+                        .addComponent(jLabel32))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jScrollPane24, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton31)
+                        .addComponent(jButton33))
+                    .addContainerGap()))
+        );
+
+        jTabbedPane1.addTab("LocalHazard", jPanel18);
+
+        jLabel35.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jLabel35.setText("ID");
+
+        jLabel36.setFont(new java.awt.Font("Vani", 1, 18)); // NOI18N
+        jLabel36.setText("0");
+
+        tblEcenters1.setBackground(new java.awt.Color(240, 240, 240));
+        tblEcenters1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane25.setViewportView(tblEcenters1);
+
+        jButton35.setText("Edit");
+        jButton35.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton35ActionPerformed(evt);
+            }
+        });
+
+        jButton37.setText("Delete");
+
+        javax.swing.GroupLayout jPanel19Layout = new javax.swing.GroupLayout(jPanel19);
+        jPanel19.setLayout(jPanel19Layout);
+        jPanel19Layout.setHorizontalGroup(
+            jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel19Layout.createSequentialGroup()
+                .addContainerGap(811, Short.MAX_VALUE)
+                .addComponent(jButton35)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton37)
+                .addGap(11, 11, 11))
+            .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel19Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane25)
+                        .addGroup(jPanel19Layout.createSequentialGroup()
+                            .addGap(17, 17, 17)
+                            .addComponent(jLabel35)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jLabel36)
+                            .addGap(0, 869, Short.MAX_VALUE)))
+                    .addContainerGap()))
+        );
+        jPanel19Layout.setVerticalGroup(
+            jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel19Layout.createSequentialGroup()
+                .addContainerGap(221, Short.MAX_VALUE)
+                .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton35)
+                    .addComponent(jButton37))
+                .addContainerGap())
+            .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel19Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel36)
+                        .addComponent(jLabel35))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jScrollPane25, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(57, Short.MAX_VALUE)))
+        );
+
+        jTabbedPane1.addTab("Evacuation Centers", jPanel19);
+
+        jLabel37.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jLabel37.setText("ID");
+
+        jLabel38.setFont(new java.awt.Font("Vani", 1, 18)); // NOI18N
+        jLabel38.setText("0");
+
+        tblSignage1.setBackground(new java.awt.Color(240, 240, 240));
+        tblSignage1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane26.setViewportView(tblSignage1);
+
+        jButton38.setText("Edit");
+        jButton38.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton38ActionPerformed(evt);
+            }
+        });
+
+        jButton39.setText("Delete");
+
+        javax.swing.GroupLayout jPanel20Layout = new javax.swing.GroupLayout(jPanel20);
+        jPanel20.setLayout(jPanel20Layout);
+        jPanel20Layout.setHorizontalGroup(
+            jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 952, Short.MAX_VALUE)
+            .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel20Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane26)
+                        .addGroup(jPanel20Layout.createSequentialGroup()
+                            .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel20Layout.createSequentialGroup()
+                                    .addGap(812, 812, 812)
+                                    .addComponent(jButton38)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jButton39))
+                                .addGroup(jPanel20Layout.createSequentialGroup()
+                                    .addGap(17, 17, 17)
+                                    .addComponent(jLabel37)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(jLabel38)))
+                            .addGap(0, 0, Short.MAX_VALUE)))
+                    .addContainerGap()))
+        );
+        jPanel20Layout.setVerticalGroup(
+            jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 255, Short.MAX_VALUE)
+            .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel20Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel38)
+                        .addComponent(jLabel37))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jScrollPane26, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton38)
+                        .addComponent(jButton39))
+                    .addContainerGap()))
+        );
+
+        jTabbedPane1.addTab("Signage", jPanel20);
+
+        jLabel39.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jLabel39.setText("ID");
+
+        jLabel40.setFont(new java.awt.Font("Vani", 1, 18)); // NOI18N
+        jLabel40.setText("0");
+
+        jTable21.setBackground(new java.awt.Color(240, 240, 240));
+        jTable21.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane27.setViewportView(jTable21);
+
+        jButton40.setText("Edit");
+        jButton40.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton40ActionPerformed(evt);
+            }
+        });
+
+        jButton42.setText("Delete");
+
+        javax.swing.GroupLayout jPanel21Layout = new javax.swing.GroupLayout(jPanel21);
+        jPanel21.setLayout(jPanel21Layout);
+        jPanel21Layout.setHorizontalGroup(
+            jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 952, Short.MAX_VALUE)
+            .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel21Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane27)
+                        .addGroup(jPanel21Layout.createSequentialGroup()
+                            .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel21Layout.createSequentialGroup()
+                                    .addGap(812, 812, 812)
+                                    .addComponent(jButton40)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jButton42))
+                                .addGroup(jPanel21Layout.createSequentialGroup()
+                                    .addGap(17, 17, 17)
+                                    .addComponent(jLabel39)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(jLabel40)))
+                            .addGap(0, 0, Short.MAX_VALUE)))
+                    .addContainerGap()))
+        );
+        jPanel21Layout.setVerticalGroup(
+            jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 255, Short.MAX_VALUE)
+            .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel21Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel40)
+                        .addComponent(jLabel39))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jScrollPane27, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton40)
+                        .addComponent(jButton42))
+                    .addContainerGap()))
+        );
+
+        jTabbedPane1.addTab("List Of Equipment", jPanel21);
+
+        jLabel41.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jLabel41.setText("ID");
+
+        jLabel42.setFont(new java.awt.Font("Vani", 1, 18)); // NOI18N
+        jLabel42.setText("0");
+
+        jTable22.setBackground(new java.awt.Color(240, 240, 240));
+        jTable22.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane28.setViewportView(jTable22);
+
+        jButton43.setText("Edit");
+        jButton43.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton43ActionPerformed(evt);
+            }
+        });
+
+        jButton44.setText("Delete");
+
+        javax.swing.GroupLayout jPanel22Layout = new javax.swing.GroupLayout(jPanel22);
+        jPanel22.setLayout(jPanel22Layout);
+        jPanel22Layout.setHorizontalGroup(
+            jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 952, Short.MAX_VALUE)
+            .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel22Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane28)
+                        .addGroup(jPanel22Layout.createSequentialGroup()
+                            .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel22Layout.createSequentialGroup()
+                                    .addGap(812, 812, 812)
+                                    .addComponent(jButton43)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jButton44))
+                                .addGroup(jPanel22Layout.createSequentialGroup()
+                                    .addGap(17, 17, 17)
+                                    .addComponent(jLabel41)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(jLabel42)))
+                            .addGap(0, 0, Short.MAX_VALUE)))
+                    .addContainerGap()))
+        );
+        jPanel22Layout.setVerticalGroup(
+            jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 255, Short.MAX_VALUE)
+            .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel22Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel42)
+                        .addComponent(jLabel41))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jScrollPane28, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton43)
+                        .addComponent(jButton44))
+                    .addContainerGap()))
+        );
+
+        jTabbedPane1.addTab("Early Warning Device", jPanel22);
+
+        jLabel43.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jLabel43.setText("ID");
+
+        jLabel44.setFont(new java.awt.Font("Vani", 1, 18)); // NOI18N
+        jLabel44.setText("0");
+
+        jTable23.setBackground(new java.awt.Color(240, 240, 240));
+        jTable23.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane29.setViewportView(jTable23);
+
+        jButton45.setText("Edit");
+        jButton45.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton45ActionPerformed(evt);
+            }
+        });
+
+        jButton46.setText("Delete");
+
+        javax.swing.GroupLayout jPanel23Layout = new javax.swing.GroupLayout(jPanel23);
+        jPanel23.setLayout(jPanel23Layout);
+        jPanel23Layout.setHorizontalGroup(
+            jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 952, Short.MAX_VALUE)
+            .addGroup(jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel23Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane29)
+                        .addGroup(jPanel23Layout.createSequentialGroup()
+                            .addGroup(jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel23Layout.createSequentialGroup()
+                                    .addGap(812, 812, 812)
+                                    .addComponent(jButton45)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jButton46))
+                                .addGroup(jPanel23Layout.createSequentialGroup()
+                                    .addGap(17, 17, 17)
+                                    .addComponent(jLabel43)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(jLabel44)))
+                            .addGap(0, 0, Short.MAX_VALUE)))
+                    .addContainerGap()))
+        );
+        jPanel23Layout.setVerticalGroup(
+            jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 255, Short.MAX_VALUE)
+            .addGroup(jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel23Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel44)
+                        .addComponent(jLabel43))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jScrollPane29, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton45)
+                        .addComponent(jButton46))
+                    .addContainerGap()))
+        );
+
+        jTabbedPane1.addTab("Traning & Drills", jPanel23);
+
+        jLabel45.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jLabel45.setText("ID");
+
+        jLabel46.setFont(new java.awt.Font("Vani", 1, 18)); // NOI18N
+        jLabel46.setText("0");
+
+        jTable24.setBackground(new java.awt.Color(240, 240, 240));
+        jTable24.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane30.setViewportView(jTable24);
+
+        jButton47.setText("Edit");
+        jButton47.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton47ActionPerformed(evt);
+            }
+        });
+
+        jButton48.setText("Delete");
+
+        javax.swing.GroupLayout jPanel24Layout = new javax.swing.GroupLayout(jPanel24);
+        jPanel24.setLayout(jPanel24Layout);
+        jPanel24Layout.setHorizontalGroup(
+            jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 952, Short.MAX_VALUE)
+            .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel24Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane30)
+                        .addGroup(jPanel24Layout.createSequentialGroup()
+                            .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel24Layout.createSequentialGroup()
+                                    .addGap(812, 812, 812)
+                                    .addComponent(jButton47)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jButton48))
+                                .addGroup(jPanel24Layout.createSequentialGroup()
+                                    .addGap(17, 17, 17)
+                                    .addComponent(jLabel45)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(jLabel46)))
+                            .addGap(0, 0, Short.MAX_VALUE)))
+                    .addContainerGap()))
+        );
+        jPanel24Layout.setVerticalGroup(
+            jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 255, Short.MAX_VALUE)
+            .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel24Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel46)
+                        .addComponent(jLabel45))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jScrollPane30, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton47)
+                        .addComponent(jButton48))
+                    .addContainerGap()))
+        );
+
+        jTabbedPane1.addTab("Emergency Kit", jPanel24);
 
         jMenu1.setText("Home");
         jMenu1.addActionListener(new java.awt.event.ActionListener() {
@@ -1335,15 +1864,6 @@ DefaultTableModel dm;
                 jMenu1ActionPerformed(evt);
             }
         });
-
-        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_H, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem1.setText("History");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItem1);
 
         jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem2.setText("About");
@@ -1376,30 +1896,44 @@ DefaultTableModel dm;
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel4)
-                        .addGap(18, 18, 18)
-                        .addComponent(ComboBoxDate, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(328, 328, 328)
-                        .addComponent(jButton41, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(ComboBoxDate, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(249, 249, 249)
+                        .addComponent(txtB, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(93, 93, 93)
+                        .addComponent(txtD, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton41, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(LocalHazard, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
-            .addComponent(LocalHazard, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(ComboBoxDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton41))
-                .addGap(18, 18, 18)
-                .addComponent(LocalHazard, javax.swing.GroupLayout.PREFERRED_SIZE, 467, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jButton41)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel4)
+                                    .addComponent(ComboBoxDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtD, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtB, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(LocalHazard, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -1413,59 +1947,13 @@ DefaultTableModel dm;
     close();
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-     FrmHistoryofdata o = new FrmHistoryofdata();
-     o.setVisible(true);
-   
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
-
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
      FrmAbout o = new FrmAbout();
      o.setVisible(true);
     
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
-    public void show_DOC() throws SQLException, ClassNotFoundException{
-        ArrayList<DisasterOperationsCenter> list = DOCList();
-        DefaultTableModel model = (DefaultTableModel)tblDOC1.getModel();
-        Object [] row = new Object [13];
-        for (int i = 1; i < list.size();i++){
-            row[0] = list.get(i).getid();
-            row[1] = list.get(i).getChoice(); 
-            row[2] = list.get(i).getTxt();
-            row[3] = list.get(i).getTxt2();
-            row[4] = list.get(i).getLocation();
-            row[5] = list.get(i).getLocation1();
-            row[6] = list.get(i).getArea();
-            row[7] = list.get(i).getContactNo();
-            row[8] = list.get(i).getContactNo1();
-            row[9] = list.get(i).getUtilities();
-            row[10] = list.get(i).getUtilities1();
-            row[11] = list.get(i).getPersonal();  
-            row[12] = list.get(i).getDate();
-        }
-    }
-    
-    public ArrayList <DisasterOperationsCenter> DOCList() throws SQLException, ClassNotFoundException{
-         ArrayList<DisasterOperationsCenter> DOCList = new ArrayList<>();
-        try{
-             Class.forName("org.sqlite.JDBC");
-             String url = "jdbc:sqlite:C:\\Users\\Rannie Claire\\Documents\\NetBeansProjects\\BarangayInformationSystem\\src\\BIS\\bis.sqlite";
-             conn = java.sql.DriverManager.getConnection(url);
-             String query = "Select * from tblDOC";
-             Statement st = conn.createStatement();
-             ResultSet rs = st.executeQuery(query);
-             DisasterOperationsCenter doc;
-             while(rs.next()){
-                 doc = new DisasterOperationsCenter (rs.getInt("ID"),rs.getString("Choice"),rs.getString("txt"),rs.getString("txt2"),rs.getString("Location"),rs.getString("Location1"),rs.getString("Area"),rs.getString("ContactNo"),rs.getString("ContactNo1"),rs.getString("Utilities"),rs.getString("Utilities1"),rs.getString("Personal"),rs.getString("Date"));
-                 DOCList.add(doc);
-             }
-         }
-         catch(Exception e){
-             JOptionPane.showMessageDialog(null,e);
-         }
-         return DOCList;
-    }
+  
     public void ComboboxDate(){
     try{
           Class.forName("org.sqlite.JDBC");
@@ -1478,7 +1966,9 @@ DefaultTableModel dm;
 "union\n" +
 "Select * from (select tblBDRRMC.Date from tblBDRRMC order by tblBDRRMC.ID DESC)\n" +
 "union\n" +
-"Select * from (select tblCondition.Date from tblCondition order by tblCondition.ID DESC)";
+"Select * from (select tblCondition.Date from tblCondition order by tblCondition.ID DESC)\n" +
+"union\n" +        
+"Select * from (select tblInfrastracture.Date from tblInfrastracture order by tblInfrastracture.ID DESC)";                  
           java.sql.ResultSet rs = null;
           java.sql.PreparedStatement pstmt = null;
           pstmt = conn.prepareStatement(query);
@@ -1493,7 +1983,52 @@ DefaultTableModel dm;
           System.out.println("Date Error: " + e.getMessage());
       }}
     
-   
+//      public void ComboboxBaranggay(){
+//    try{
+//          Class.forName("org.sqlite.JDBC");
+//          url = "jdbc:sqlite:C:\\Users\\Rannie Claire\\Documents\\NetBeansProjects\\BarangayInformationSystem\\src\\BIS\\bis.sqlite";     
+//          conn = java.sql.DriverManager.getConnection(url);
+//          SQLite.openDB();
+//          String query = "Select * from (select tblCondition.Baranggay from tblCondition order by tblCondition.ID DESC)\n" +
+//"union\n" +
+//"Select * from (select tblInfrastracture.Baranggay from tblInfrastracture order by tblInfrastracture.ID DESC)";
+//          java.sql.ResultSet rs = null;
+//          java.sql.PreparedStatement pstmt = null;
+//          pstmt = conn.prepareStatement(query);
+//          rs = pstmt.executeQuery();
+//          while(rs.next()){
+//              String Position = rs.getString("baranggay");
+//              ComboBoxBaranggay.addItem(Position);
+//          }
+//          SQLite.closeDB();
+//      }
+//      catch(Exception e){
+//          System.out.println("Date Error: " + e.getMessage());
+//      }}
+//    
+//      public void ComboboxDistrict(){
+//    try{
+//          Class.forName("org.sqlite.JDBC");
+//          url = "jdbc:sqlite:C:\\Users\\Rannie Claire\\Documents\\NetBeansProjects\\BarangayInformationSystem\\src\\BIS\\bis.sqlite";     
+//          conn = java.sql.DriverManager.getConnection(url);
+//          SQLite.openDB();
+//          String query = "Select * from (select tblCondition.District from tblCondition order by tblCondition.ID DESC)\n" +
+//"union\n" +
+//"Select * from (select tblInfrastracture.District from tblInfrastracture order by tblInfrastracture.ID DESC)";
+//          java.sql.ResultSet rs = null;
+//          java.sql.PreparedStatement pstmt = null;
+//          pstmt = conn.prepareStatement(query);
+//          rs = pstmt.executeQuery();
+//          while(rs.next()){
+//              String Position = rs.getString("District");
+//              ComboBoxDistrict.addItem(Position);
+//          }
+//          SQLite.closeDB();
+//      }
+//      catch(Exception e){
+//          System.out.println("Date Error: " + e.getMessage());
+//      }}
+//   
     private void ComboBoxDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxDateActionPerformed
       
 
@@ -1503,6 +2038,11 @@ DefaultTableModel dm;
     
     
     private void ComboBoxDateItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ComboBoxDateItemStateChanged
+//        String query = ComboBoxDate.getSelectedItem().toString();
+//        if(query!= "None")
+//            {
+//            pstt.setRowFilter(RowFilter.regexFilter(query));
+//            }else
         try{
             String query = "Select * from tblBDRRMC where Date = ?";
             PreparedStatement pst=conn.prepareStatement(query);
@@ -1524,15 +2064,66 @@ DefaultTableModel dm;
             pstttt.setString(1, (String) ComboBoxDate.getSelectedItem());
             ResultSet rssss=pstttt.executeQuery();
              
+            String query4 = "Select * from tblInfrastracture where Date = ?";
+            PreparedStatement psttttt=conn.prepareStatement(query4);
+            psttttt.setString(1, (String) ComboBoxDate.getSelectedItem());
+            ResultSet rsssss=psttttt.executeQuery();
+            
+            String query5 = "Select * from tblSignage where Date = ?";
+            PreparedStatement pstttttt=conn.prepareStatement(query5);
+            pstttttt.setString(1, (String) ComboBoxDate.getSelectedItem());
+            ResultSet rssssss=pstttttt.executeQuery();
+            
+            String query6 = "Select * from tblHazard where Date = ?";
+            PreparedStatement psttttttt=conn.prepareStatement(query6);
+            psttttttt.setString(1, (String) ComboBoxDate.getSelectedItem());
+            ResultSet rsssssss=psttttttt.executeQuery();
+            
+            String query7 = "Select * from tblEcenters where Date = ?";
+            PreparedStatement pstttttttt=conn.prepareStatement(query7);
+            pstttttttt.setString(1, (String) ComboBoxDate.getSelectedItem());
+            ResultSet rssssssss=pstttttttt.executeQuery();
+            
+            String query8 = "Select * from tblSector where Date = ?";
+            PreparedStatement psttttttttt=conn.prepareStatement(query8);
+            psttttttttt.setString(1, (String) ComboBoxDate.getSelectedItem());
+            ResultSet rsssssssss=psttttttttt.executeQuery();
+            
+            String query9 = "Select * from tblServices where Date = ?";
+            PreparedStatement pstttttttttt=conn.prepareStatement(query9);
+            pstttttttttt.setString(1, (String) ComboBoxDate.getSelectedItem());
+            ResultSet rssssssssss=pstttttttttt.executeQuery();
+                       
+//            String querya ="Select District from tblBDRRMC where Date = ?";
+//            PreparedStatement pss=conn.prepareStatement(querya);
+//            pss.setString(9, (String) ComboBoxDate.getSelectedItem());
+//            ResultSet sett=pss.executeQuery();
+//            txtD.setText(sett.getString("District")); 
+//
+//            String queryb ="Select Baranggay from tblBDRRMC where Date = ?";
+//            PreparedStatement ps=conn.prepareStatement(queryb);
+//            ps.setString(8, (String) ComboBoxDate.getSelectedItem());
+//            ResultSet set=ps.executeQuery();
+//            txtB.setText(set.getString("Baranggay")); 
+
             tblBDRRMC1.setModel(DbUtils.resultSetToTableModel(rs));
+            tblServices1.setModel(DbUtils.resultSetToTableModel(rssssssssss));
+            tblSector1.setModel(DbUtils.resultSetToTableModel(rsssssssss));
+            tblEcenters1.setModel(DbUtils.resultSetToTableModel(rssssssss));
+            tblSignage1.setModel(DbUtils.resultSetToTableModel(rsssssss));
+            tblLocal1.setModel(DbUtils.resultSetToTableModel(rssssss));
             tblAreas1.setModel(DbUtils.resultSetToTableModel(rss));
             tblDOC1.setModel(DbUtils.resultSetToTableModel(rsss));
             tblConditions1.setModel(DbUtils.resultSetToTableModel(rssss));
+            tblInfrastracture1.setModel(DbUtils.resultSetToTableModel(rsssss));
+
+                       
             pst.close();
             pstt.close();
             psttt.close();
             pstttt.close();
-            
+            psttttt.close();
+          
         }
         catch (Exception ex){
             ex.printStackTrace();
@@ -1547,19 +2138,15 @@ DefaultTableModel dm;
 //        filter(query);
     }//GEN-LAST:event_ComboBoxDateItemStateChanged
 
-    private void jButton30ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton30ActionPerformed
-        FrmAddLocalHazardandVulnerabilityMaps o = new FrmAddLocalHazardandVulnerabilityMaps();
-        o.setVisible(true);
-    }//GEN-LAST:event_jButton30ActionPerformed
-
-    private void jButton26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton26ActionPerformed
-        FrmAddAgriculturalSector o = new FrmAddAgriculturalSector();
-        o.setVisible(true);
-
-    }//GEN-LAST:event_jButton26ActionPerformed
-
     private void jButton22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton22ActionPerformed
-        FrmAddServiceInArea o = new FrmAddServiceInArea();
+        FrmAddServiceInArea o = null;
+    try {
+        o = new FrmAddServiceInArea();
+    } catch (SQLException ex) {
+        Logger.getLogger(FrmBDRRMC.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (ClassNotFoundException ex) {
+        Logger.getLogger(FrmBDRRMC.class.getName()).log(Level.SEVERE, null, ex);
+    }
         o.setVisible(true);
 
     }//GEN-LAST:event_jButton22ActionPerformed
@@ -1569,8 +2156,16 @@ DefaultTableModel dm;
     }//GEN-LAST:event_jButton20ActionPerformed
 
     private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
-        FrmAddGovernmentInsfrastracture o = new FrmAddGovernmentInsfrastracture();
+      FrmAddGovernmentInsfrastracture o = null;
+    try {
+        o = new FrmAddGovernmentInsfrastracture();
+    } catch (SQLException ex) {
+        Logger.getLogger(FrmBDRRMC.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (ClassNotFoundException ex) {
+        Logger.getLogger(FrmBDRRMC.class.getName()).log(Level.SEVERE, null, ex);
+    }
         o.setVisible(true);
+
     }//GEN-LAST:event_jButton18ActionPerformed
 
     private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
@@ -1612,6 +2207,7 @@ DefaultTableModel dm;
         int index = tblConditions1.getSelectedRow();
         TableModel model = tblConditions1.getModel();
         txtID3.setText(model.getValueAt(index, 0).toString());
+     
     }//GEN-LAST:event_tblConditions1MouseClicked
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
@@ -1733,7 +2329,83 @@ DefaultTableModel dm;
         int index = tblBDRRMC1.getSelectedRow();
         TableModel model = tblBDRRMC1.getModel();
         txtID.setText(model.getValueAt(index, 0).toString());
+        
     }//GEN-LAST:event_tblBDRRMC1MouseClicked
+
+    private void tblInfrastracture1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblInfrastracture1MouseClicked
+        int index = tblInfrastracture1.getSelectedRow();
+        TableModel model = tblInfrastracture1.getModel();
+        txtID4.setText(model.getValueAt(index, 0).toString());
+
+    }//GEN-LAST:event_tblInfrastracture1MouseClicked
+
+    private void jButton27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton27ActionPerformed
+         FrmAddAgriculturalSector o = null;
+    try {
+        o = new FrmAddAgriculturalSector();
+    } catch (SQLException ex) {
+        Logger.getLogger(FrmBDRRMC.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (ClassNotFoundException ex) {
+        Logger.getLogger(FrmBDRRMC.class.getName()).log(Level.SEVERE, null, ex);
+    }
+        o.setVisible(true);
+
+    }//GEN-LAST:event_jButton27ActionPerformed
+
+    private void jButton31ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton31ActionPerformed
+        FrmAddLocalHazardandVulnerabilityMaps o = null;
+    try {
+        o = new FrmAddLocalHazardandVulnerabilityMaps();
+    } catch (SQLException ex) {
+        Logger.getLogger(FrmBDRRMC.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (ClassNotFoundException ex) {
+        Logger.getLogger(FrmBDRRMC.class.getName()).log(Level.SEVERE, null, ex);
+    }
+        o.setVisible(true);
+
+    }//GEN-LAST:event_jButton31ActionPerformed
+
+    private void jButton35ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton35ActionPerformed
+            FrmAddEvacuationCenters o = null;
+    try {
+        o = new FrmAddEvacuationCenters();
+    } catch (SQLException ex) {
+        Logger.getLogger(FrmBDRRMC.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (ClassNotFoundException ex) {
+        Logger.getLogger(FrmBDRRMC.class.getName()).log(Level.SEVERE, null, ex);
+    }
+        o.setVisible(true);
+
+    }//GEN-LAST:event_jButton35ActionPerformed
+
+    private void jButton38ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton38ActionPerformed
+              FrmAddSignage o = null;
+    try {
+        o = new FrmAddSignage();
+    } catch (SQLException ex) {
+        Logger.getLogger(FrmBDRRMC.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (ClassNotFoundException ex) {
+        Logger.getLogger(FrmBDRRMC.class.getName()).log(Level.SEVERE, null, ex);
+    }
+        o.setVisible(true);
+
+    }//GEN-LAST:event_jButton38ActionPerformed
+
+    private void jButton40ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton40ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton40ActionPerformed
+
+    private void jButton43ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton43ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton43ActionPerformed
+
+    private void jButton45ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton45ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton45ActionPerformed
+
+    private void jButton47ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton47ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton47ActionPerformed
     
     
     
@@ -1792,13 +2464,25 @@ DefaultTableModel dm;
     private javax.swing.JButton jButton20;
     private javax.swing.JButton jButton22;
     private javax.swing.JButton jButton24;
-    private javax.swing.JButton jButton26;
-    private javax.swing.JButton jButton28;
-    private javax.swing.JButton jButton30;
-    private javax.swing.JButton jButton32;
+    private javax.swing.JButton jButton27;
+    private javax.swing.JButton jButton29;
+    private javax.swing.JButton jButton31;
+    private javax.swing.JButton jButton33;
     private javax.swing.JButton jButton34;
+    private javax.swing.JButton jButton35;
     private javax.swing.JButton jButton36;
+    private javax.swing.JButton jButton37;
+    private javax.swing.JButton jButton38;
+    private javax.swing.JButton jButton39;
+    private javax.swing.JButton jButton40;
     private javax.swing.JButton jButton41;
+    private javax.swing.JButton jButton42;
+    private javax.swing.JButton jButton43;
+    private javax.swing.JButton jButton44;
+    private javax.swing.JButton jButton45;
+    private javax.swing.JButton jButton46;
+    private javax.swing.JButton jButton47;
+    private javax.swing.JButton jButton48;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel14;
@@ -1806,69 +2490,83 @@ DefaultTableModel dm;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel25;
-    private javax.swing.JLabel jLabel26;
-    private javax.swing.JLabel jLabel29;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel36;
+    private javax.swing.JLabel jLabel37;
+    private javax.swing.JLabel jLabel38;
+    private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel40;
+    private javax.swing.JLabel jLabel41;
+    private javax.swing.JLabel jLabel42;
+    private javax.swing.JLabel jLabel43;
+    private javax.swing.JLabel jLabel44;
+    private javax.swing.JLabel jLabel45;
+    private javax.swing.JLabel jLabel46;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel11;
-    private javax.swing.JPanel jPanel12;
-    private javax.swing.JPanel jPanel13;
-    private javax.swing.JPanel jPanel14;
-    private javax.swing.JPanel jPanel15;
-    private javax.swing.JPanel jPanel16;
+    private javax.swing.JPanel jPanel17;
+    private javax.swing.JPanel jPanel18;
+    private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel20;
+    private javax.swing.JPanel jPanel21;
+    private javax.swing.JPanel jPanel22;
+    private javax.swing.JPanel jPanel23;
+    private javax.swing.JPanel jPanel24;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane11;
-    private javax.swing.JScrollPane jScrollPane12;
-    private javax.swing.JScrollPane jScrollPane13;
-    private javax.swing.JScrollPane jScrollPane14;
-    private javax.swing.JScrollPane jScrollPane15;
-    private javax.swing.JScrollPane jScrollPane16;
-    private javax.swing.JScrollPane jScrollPane17;
+    private javax.swing.JScrollPane jScrollPane18;
+    private javax.swing.JScrollPane jScrollPane24;
+    private javax.swing.JScrollPane jScrollPane25;
+    private javax.swing.JScrollPane jScrollPane26;
+    private javax.swing.JScrollPane jScrollPane27;
+    private javax.swing.JScrollPane jScrollPane28;
+    private javax.swing.JScrollPane jScrollPane29;
+    private javax.swing.JScrollPane jScrollPane30;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
-    private javax.swing.JScrollPane jScrollPane8;
-    private javax.swing.JScrollPane jScrollPane9;
-    private javax.swing.JTable jTable10;
-    private javax.swing.JTable jTable11;
-    private javax.swing.JTable jTable12;
-    private javax.swing.JTable jTable13;
-    private javax.swing.JTable jTable14;
-    private javax.swing.JTable jTable6;
-    private javax.swing.JTable jTable7;
-    private javax.swing.JTable jTable8;
-    private javax.swing.JTable jTable9;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTable jTable21;
+    private javax.swing.JTable jTable22;
+    private javax.swing.JTable jTable23;
+    private javax.swing.JTable jTable24;
     private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField7;
     private javax.swing.JTable tblAreas1;
     private javax.swing.JTable tblBDRRMC1;
     private javax.swing.JTable tblConditions1;
     private javax.swing.JTable tblDOC1;
-    private javax.swing.JTable tblFacilities1;
+    private javax.swing.JTable tblEcenters1;
+    private javax.swing.JTable tblInfrastracture1;
+    private javax.swing.JTable tblLocal1;
+    private javax.swing.JTable tblSector1;
+    private javax.swing.JTable tblServices1;
+    private javax.swing.JTable tblSignage1;
     public static javax.swing.JLabel txtActiveUser;
+    private javax.swing.JLabel txtB;
+    private javax.swing.JLabel txtD;
     private javax.swing.JLabel txtDate;
     private javax.swing.JLabel txtID;
     private javax.swing.JLabel txtID1;

@@ -22,9 +22,11 @@ public class DisasterOperationsCenter {
     private String Utilities;
     private String Utilities1;
     private String Personal;
+    private String Baranggay;
+    private String District;
     private String Date;
     
-    public DisasterOperationsCenter(int id, String Choice, String txt, String txt2,String Location,String Location1,String Area,String ContactNo,String ContactNo1,String Utilities,String Utilities1,String Personal, String Date)
+    public DisasterOperationsCenter(int id, String Choice, String txt, String txt2,String Location,String Location1,String Area,String ContactNo,String ContactNo1,String Utilities,String Utilities1,String Personal,String Baranggay,String District, String Date)
     {
     this.id = id;
     this.Choice = Choice;
@@ -38,6 +40,8 @@ public class DisasterOperationsCenter {
     this.Utilities = Utilities;
     this.Utilities1 = Utilities1;
     this.Personal = Personal;
+    this.Baranggay = Baranggay;
+    this.District = District;
     this.Date = Date;
     }
     
@@ -99,6 +103,16 @@ public class DisasterOperationsCenter {
         return Personal;
     }
     
+    public String getBaranggay()
+    {
+        return Baranggay;
+    }
+    
+    public String getDistrict()
+    {
+        return District;
+    }
+        
     public String getDate()
     {
         return Date;

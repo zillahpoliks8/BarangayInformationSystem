@@ -10,9 +10,11 @@ public class BDRRMC {
     private String ContactNo;
     private String Position;
     private String No;
+    private String Baranggay;
+    private String District;
     private String Date;
   
-    public BDRRMC(int id, String choices,String Composition_of_BDRRMC,String Composition,String ContactNo,String Position,String No, String Date)
+    public BDRRMC(int id, String choices,String Composition_of_BDRRMC,String Composition,String ContactNo,String Position,String No, String Branggay, String District, String Date)
     {
     this.id = id;
     this.choices = choices;
@@ -21,6 +23,8 @@ public class BDRRMC {
     this.ContactNo = ContactNo;
     this.Position = Position;
     this.No = No;
+    this.Baranggay = Baranggay;
+    this.District = District;  
     this.Date= Date;
     }
     
@@ -54,6 +58,14 @@ public class BDRRMC {
    {
        return No;
    }
+      public String getBaranggay()
+    {
+        return Baranggay;
+    }
+      public String getDistrict()
+    {
+        return District;
+    }
    public String getDate()
    {
        return Date;

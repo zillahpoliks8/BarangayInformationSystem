@@ -42,22 +42,22 @@ PreparedStatement pst = null;
         initComponents();
         ComboboxDate();
         show_BDRRMC();
-        Fillcombo();
+//        Fillcombo();
 //        FillRadio();
         this.setLocationRelativeTo(null);
         if(SQLite.openDB()){
             String[][] data = SQLite.read("tblBDRRMC");
-            String[] column = {"ID","BDRRMC","Composition","Composition","ContactNo","Position","No BDRRMC","Date"};
+            String[] column = {"ID","BDRRMC","Composition","Composition","ContactNo","Position","No BDRRMC","Baranggay","District","Date"};
             javax.swing.table.DefaultTableModel model = new javax.swing.table.DefaultTableModel(data, column);
             this.tblBDRRMC1.setModel(model);
             SQLite.closeDB();
         }
     }
 
-    public void show_BDRRMC() throws SQLException, ClassNotFoundException{
+    public void show_BDRRMC() throws SQLException, ClassNotFoundException{ ///////#1
         ArrayList<BDRRMC> list = BDRRMCList();
         DefaultTableModel model = (DefaultTableModel)tblBDRRMC1.getModel();
-        Object [] row = new Object [8];
+        Object [] row = new Object [10];
         for (int i = 1; i < list.size();i++){
             row[0] = list.get(i).getid();
             row[1] = list.get(i).getChoices();
@@ -66,12 +66,14 @@ PreparedStatement pst = null;
             row[4] = list.get(i).getContactNo();
             row[5] = list.get(i).getPosition();
             row[6] = list.get(i).getNo();
-            row[7] = list.get(i).getDate();
+            row[7] = list.get(i).getBaranggay();
+            row[8] = list.get(i).getDistrict();
+            row[9] = list.get(i).getDate();
             model.addRow(row);          
         }
     }
     
-    public ArrayList <BDRRMC> BDRRMCList() throws SQLException, ClassNotFoundException{
+    public ArrayList <BDRRMC> BDRRMCList() throws SQLException, ClassNotFoundException{ /////#2
          ArrayList<BDRRMC> BDRRMCList = new ArrayList<>();
          try{
              Class.forName("org.sqlite.JDBC");
@@ -82,7 +84,7 @@ PreparedStatement pst = null;
              ResultSet rs = st.executeQuery(query);
              BDRRMC bdrrmc;
              while(rs.next()){
-                 bdrrmc = new BDRRMC (rs.getInt("ID"),rs.getString("choices"),rs.getString("Composition_of_BDRRMC"),rs.getString("Composition"),rs.getString("ContactNo"),rs.getString("Position"),rs.getString("No"),rs.getString("Date"));
+                 bdrrmc = new BDRRMC (rs.getInt("ID"),rs.getString("choices"),rs.getString("Composition_of_BDRRMC"),rs.getString("Composition"),rs.getString("ContactNo"),rs.getString("Position"),rs.getString("No"),rs.getString("Baranggay"),rs.getString("District"),rs.getString("Date"));
                  BDRRMCList.add(bdrrmc);
              }
          }
@@ -91,7 +93,7 @@ PreparedStatement pst = null;
          }
          return BDRRMCList;
     }
-            public void executeSQLQuery(String query,String message) throws SQLException
+            public void executeSQLQuery(String query,String message) throws SQLException ////#3
             {
                 conn = java.sql.DriverManager.getConnection(url);
                 Statement st;
@@ -108,13 +110,13 @@ PreparedStatement pst = null;
                     ex.printStackTrace();
                 }
             }
-        public void clear (){
+        public void clear (){  //#4
             txtComposition.setText("");
             txtContactNo.setText("");
             txtPosition.setText("");
             ComboBox.setSelectedIndex(0);
         }
-         public void ComboboxDate(){
+         public void ComboboxDate(){ //#5
      try{
           Class.forName("org.sqlite.JDBC");
           url = "jdbc:sqlite:C:\\Users\\Rannie Claire\\Documents\\NetBeansProjects\\BarangayInformationSystem\\src\\BIS\\bis.sqlite";     
@@ -175,13 +177,15 @@ PreparedStatement pst = null;
         jLabel3 = new javax.swing.JLabel();
         ComboBoxDate = new javax.swing.JComboBox<>();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jLabel5 = new javax.swing.JLabel();
+        JComboPob = new javax.swing.JComboBox<>();
+        jLabel6 = new javax.swing.JLabel();
+        jComboDist = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(153, 153, 153));
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Composition of the BDRRMC"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Add New BDRRMC"));
 
-        btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Save.png"))); // NOI18N
         btnSave.setText("Save");
         btnSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -189,7 +193,6 @@ PreparedStatement pst = null;
             }
         });
 
-        btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Delete.png"))); // NOI18N
         btnDelete.setText("Delete");
         btnDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -197,7 +200,6 @@ PreparedStatement pst = null;
             }
         });
 
-        btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Cancel.png"))); // NOI18N
         btnCancel.setText("Cancel");
         btnCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -224,7 +226,6 @@ PreparedStatement pst = null;
         });
         jScrollPane1.setViewportView(tblBDRRMC1);
 
-        btnUpdate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Update User.png"))); // NOI18N
         btnUpdate.setText("Update");
         btnUpdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -232,7 +233,6 @@ PreparedStatement pst = null;
             }
         });
 
-        btnClear.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Add New.png"))); // NOI18N
         btnClear.setText("New");
         btnClear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -246,7 +246,6 @@ PreparedStatement pst = null;
         jLabel2.setBackground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Is there a BDRRMC organized within the barangay?");
 
-        ryes.setBackground(new java.awt.Color(153, 153, 153));
         buttonGroup6.add(ryes);
         ryes.setText("Yes");
         ryes.addActionListener(new java.awt.event.ActionListener() {
@@ -255,7 +254,6 @@ PreparedStatement pst = null;
             }
         });
 
-        rno.setBackground(new java.awt.Color(153, 153, 153));
         buttonGroup6.add(rno);
         rno.setText("No");
         rno.addActionListener(new java.awt.event.ActionListener() {
@@ -264,11 +262,9 @@ PreparedStatement pst = null;
             }
         });
 
-        jPanel4.setBackground(new java.awt.Color(153, 153, 153));
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Composition of the BDRRMC"));
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("If yes pls fill up *Do not leave blank spaces"));
 
-        jPanel3.setBackground(new java.awt.Color(153, 153, 153));
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Composition of the BDRRMC"));
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Contact Number and Position in Barangay"));
 
         jLabel14.setBackground(new java.awt.Color(0, 0, 0));
         jLabel14.setText("Contact Number");
@@ -282,30 +278,26 @@ PreparedStatement pst = null;
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel14)
-                    .addComponent(jLabel15))
+                .addComponent(jLabel14)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtContactNo, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
-                    .addComponent(txtPosition))
-                .addContainerGap(167, Short.MAX_VALUE))
+                .addComponent(txtContactNo, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel15)
+                .addGap(18, 18, 18)
+                .addComponent(txtPosition, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel14)
-                    .addComponent(txtContactNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel15)
-                    .addComponent(txtPosition, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(20, Short.MAX_VALUE))
+                    .addComponent(txtContactNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtPosition, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel15)))
         );
 
-        jPanel2.setBackground(new java.awt.Color(153, 153, 153));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Composition of the BDRRMC"));
 
         txtComposition.addActionListener(new java.awt.event.ActionListener() {
@@ -315,6 +307,11 @@ PreparedStatement pst = null;
         });
 
         ComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "BDRRM Officer", "Administration & Training Unit", "Researh & Planning Unit", "Operations & Warning Unit" }));
+        ComboBox.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                ComboBoxItemStateChanged(evt);
+            }
+        });
         ComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ComboBoxActionPerformed(evt);
@@ -328,8 +325,8 @@ PreparedStatement pst = null;
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(ComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
-                .addComponent(txtComposition, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addComponent(txtComposition, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -337,9 +334,9 @@ PreparedStatement pst = null;
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtComposition, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(37, Short.MAX_VALUE))
+                    .addComponent(ComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtComposition, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -348,19 +345,18 @@ PreparedStatement pst = null;
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addGap(29, 29, 29)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jLabel4.setBackground(new java.awt.Color(0, 0, 0));
@@ -371,129 +367,145 @@ PreparedStatement pst = null;
         jScrollPane2.setViewportView(txtNo);
 
         jLabel3.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel3.setText("Date");
+        jLabel3.setText("Year");
 
         ComboBoxDate.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 ComboBoxDateItemStateChanged(evt);
             }
         });
+        ComboBoxDate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ComboBoxDateActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel5.setText("Barangay ");
+
+        JComboPob.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Poblacion", "Talomo ", "Agdao", "Buhangin", "Bunawan", "Paquibato", "Baguio ", "Calinan ", "Marilog ", "Toril", "Tugbok" }));
+
+        jLabel6.setText("District");
+
+        jComboDist.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1-A", "2-A", "3-A", "4-A", "5-A", "6-A", "7-A", "8-A", "9-A", "10-A", "11-B", "12-B", "13-B", "14-B", "15-B", "16-B", "17-B", "18-B", "19-B", "20-B", "21-C", "22-C", "23-C", "24-C", "25-C", "26-C", "27-C", "28-C", "29-C", "30-C", "31-D", "32-D", "33-D", "34-D", "35-D", "36-D", "37-D", "38-D", "39-D", "40-D", "Bago Aplaya", "Bago Gallera", "Baliok", "Bucana", "Catalunan Grande", "Catalunan Pequeño", "Dumoy", "Langub", "Ma-a", "Magtuod", "Matina Aplaya", "Matina Crossing", "Matina Pangi", "Talomo Proper", "Agdao Proper", "Centro (San Juan)", "Gov. Paciano Bangoy", "Gov. Vicente Duterte", "Kap. Tomas Monteverde, Sr.", "Lapu-Lapu", "Leon Garcia", "Rafael Castillo", "San Antonio", "Ubalde", "Wilfredo Aquino", "Acacia", "Alfonso Angliongto Sr.a", "Buhangin Proper", "Cabantian", "Callawa", "Communal", "Indangan", "Mandug", "Pampanga", "Sasa", "Tigatto", "Vicente Hizon Sr.a", "Waan", "Alejandra Navarro (Lasang)", "Bunawan Proper", "Gatungan", "Ilang", "Mahayag", "Mudiang", "Panacan", "San Isidro (Licanan)", "Tibungco", "Colosas", "Fatima (Benowang)", "Lumiad", "Mabuhay", "Malabog", "Mapula", "Panalum", "Pandaitan", "Paquibato Proper", "Paradise Embak", "Salapawan", "Sumimao", "Tapak", "Baguio Proper", "Cadalian", "Carmen", "Gumalang", "Malagos", "Tambubong", "Tawan-Tawan", "Wines", "Biao Joaquin", "Calinan Proper", "Cawayan", "Dacudao", "Dalagdag", "Dominga", "Inayangan", "Lacson", "Lamanan", "Lampianao", "Megkawayan", "Pangyan", "Riverside", "Saloy", "Sirib", "Subasta", "Talomo River", "Tamayong", "Wangan", "Baganihan", "Bantol", "Buda", "Dalag", "Datu Salumay", "Gumitan", "Magsaysay", "Malamba", "Marilog Proper", "Salaysay", "Suawan (Tuli)", "Tamugan", "Alambre", "Atan-Awe", "Bangkas Heights", "Baracatan", "Bato", "Bayabas", "Binugao", "Camansi", "Catigan", "Crossing Bayabas", "Daliao", "Daliaon Plantation", "Eden", "Kilate", "Lizada", "Lubogan", "Marapangi", "Mulig", "Sibulan", "Sirawan", "Tagluno", "Tagurano", "Tibuloy", "Toril Proper", "Tungkalan", "Angalan", "Bago Oshiro", "Balengaeng", "Biao Escuela", "Biao Guianga", "Los Amigos", "Manambulan", "Manuel Guianga", "Matina Biao", "Mintal", "New Carmen", "New Valencia", "Santo Niño", "Tacunan", "Tagakpan", "Talandang", "Tugbok Proper", "Ula" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel4))
-                                .addGap(18, 18, 18)
-                                .addComponent(ryes)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(rno))
-                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                            .addGap(0, 0, Short.MAX_VALUE)
-                            .addComponent(btnClear)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btnUpdate)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(btnDelete))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(jScrollPane2))))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel5)
+                        .addGap(18, 18, 18)
+                        .addComponent(JComboPob, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jComboDist, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(ryes)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(rno)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(ComboBoxDate, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(ComboBoxDate, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 585, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnClear)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnUpdate)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnDelete))
+                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 417, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 436, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(btnSave)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnCancel)))
-                        .addContainerGap())))
+                                .addComponent(btnCancel))))
+                    .addComponent(jLabel4))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(36, 36, 36)
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel5)
+                        .addComponent(JComboPob, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel6)
+                        .addComponent(jComboDist, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel2)
+                        .addComponent(ryes)
+                        .addComponent(rno)
+                        .addComponent(ComboBoxDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(ryes)
-                    .addComponent(rno))
-                .addGap(18, 18, 18)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnDelete)
-                    .addComponent(btnUpdate)
-                    .addComponent(btnClear))
-                .addGap(39, 39, 39))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(39, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(ComboBoxDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCancel)
-                    .addComponent(btnSave))
-                .addGap(20, 20, 20))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGap(10, 10, 10)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnDelete)
+                            .addComponent(btnUpdate)
+                            .addComponent(btnClear))
+                        .addGap(20, 20, 20))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnCancel)
+                            .addComponent(btnSave))
+                        .addGap(28, 28, 28))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(147, 147, 147)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void txtCompositionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCompositionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCompositionActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
     try {
           Class.forName("org.sqlite.JDBC");
           url = "jdbc:sqlite:C:\\Users\\Rannie Claire\\Documents\\NetBeansProjects\\BarangayInformationSystem\\src\\BIS\\bis.sqlite";     
           conn = java.sql.DriverManager.getConnection(url);    
-          String query ="Insert into tblBDRRMC(choices, Composition_of_BDRRMC, Composition, ContactNo, Position, No, date)values(?,?,?,?,?,?,?)";
+          String query ="Insert into tblBDRRMC(choices, Composition_of_BDRRMC, Composition, ContactNo, Position, No, Baranggay, District, date)values(?,?,?,?,?,?,?,?,?)";
           PreparedStatement pst = null;  
           pst = conn.prepareStatement(query);      
           ryes.setActionCommand("Yes");
@@ -502,15 +514,24 @@ PreparedStatement pst = null;
           choices = buttonGroup6.getSelection().getActionCommand();
           String Composition_of_BDRRM;
           Composition_of_BDRRM = ComboBox.getSelectedItem().toString();  
+//          String Operation;
+//          Operation = ComboBox2.getSelectedItem().toString();
+          String Baranggay;
+          Baranggay = JComboPob.getSelectedItem().toString();
+          String District;
+          District = jComboDist.getSelectedItem().toString();
           SimpleDateFormat dFormat = new SimpleDateFormat("yyyy");
           String date = dFormat.format(jDateChooser1.getDate());
           pst.setString(1, choices);
           pst.setString(2, Composition_of_BDRRM); 
+//          pst.setString(2, Operation);
           pst.setString(3, txtComposition.getText());
           pst.setString(4, txtContactNo.getText()); 
           pst.setString(5, txtPosition.getText());
           pst.setString(6, txtNo.getText());
-          pst.setString(7, date);
+          pst.setString(7, Baranggay);
+          pst.setString(8, District);
+          pst.setString(9, date);
       
           pst.executeUpdate(); 
           DefaultTableModel model = (DefaultTableModel)tblBDRRMC1.getModel();
@@ -561,25 +582,14 @@ PreparedStatement pst = null;
     }//GEN-LAST:event_btnDeleteActionPerformed
     
     private void tblBDRRMC1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblBDRRMC1MouseClicked
+        
         int index = tblBDRRMC1.getSelectedRow();
         TableModel model = tblBDRRMC1.getModel();
-//      txtID.setText(model.getValueAt(index, 0).toString());     
-        txtComposition.setText(model.getValueAt(index, 3).toString());
-        txtContactNo.setText(model.getValueAt(index, 4).toString());
-        txtPosition.setText(model.getValueAt(index, 5).toString());
-        txtNo.setText(model.getValueAt(index, 6).toString());
-        Date date = null;
-        try {
-        date = new SimpleDateFormat("yyyy").parse(model.getValueAt(index, 7).toString());
-           } catch (ParseException ex) {
-               Logger.getLogger(FrmAddBDRRMC.class.getName()).log(Level.SEVERE, null, ex);
-           }
-        jDateChooser1.setDate(date);
         
-        String buttonGroup6 = model.getValueAt (index, 1).toString();
+          String buttonGroup6 = model.getValueAt (index, 1).toString();
         if(buttonGroup6.equals("Yes"))
         {
-        ryes.setSelected(true);
+       ryes.setSelected(true);
        txtNo.setEnabled(false);
        txtNo.setBackground(Color.GRAY);  
        txtComposition.setEnabled(true);
@@ -591,6 +601,7 @@ PreparedStatement pst = null;
        ComboBox.setEnabled(true);
        ComboBox.setBackground(Color.WHITE);
        txtNo.setText("");
+//       txtContactNo.hide();
             }
         else{
        rno.setSelected(true);
@@ -607,9 +618,10 @@ PreparedStatement pst = null;
        txtComposition.setText("");
        txtContactNo.setText("");
        txtPosition.setText("");
+//       txtContactNo.hide();
             }
         
-        String Composition_of_BDRRMC = model.getValueAt (index, 2).toString();
+         String Composition_of_BDRRMC = model.getValueAt (index, 2).toString();
             switch(Composition_of_BDRRMC){
         
             case "BDRRM Officer":
@@ -629,7 +641,832 @@ PreparedStatement pst = null;
             break;
         
                 }
+//         String Operation = model.getValueAt (index, 2).toString();
+//            switch(Operation){
+//        
+//            case "Early Warning & Evacuation":
+//            ComboBox2.setSelectedIndex(0);
+//            break;
+//            
+//            case "Search & Rescue":
+//            ComboBox2.setSelectedIndex(1);
+//            break;
+//            
+//            case "Food & Non Food":
+//            ComboBox2.setSelectedIndex(2);
+//            break;
+//            
+//            case "Wash & Health":
+//            ComboBox2.setSelectedIndex(3);
+//            break;
+//            
+//            case "Security":
+//            ComboBox2.setSelectedIndex(4);
+//            break;
+//        
+//            case "DANA & Early Recovery":
+//            ComboBox2.setSelectedIndex(5);
+//            break;
+//        
+//                }    
+//            
+//   
+        txtComposition.setText(model.getValueAt(index, 3).toString());
+        txtContactNo.setText(model.getValueAt(index, 4).toString());
+        txtPosition.setText(model.getValueAt(index, 5).toString());
+        txtNo.setText(model.getValueAt(index, 6).toString());
+        Date date = null;
+        try {
+        date = new SimpleDateFormat("yyyy").parse(model.getValueAt(index, 9).toString());
+           } catch (ParseException ex) {
+               Logger.getLogger(FrmAddBDRRMC.class.getName()).log(Level.SEVERE, null, ex);
+           }
+        jDateChooser1.setDate(date);
         
+     
+         String Baranggay = model.getValueAt (index, 7).toString();
+            switch(Baranggay){
+        
+            case "Poblacion":
+            JComboPob.setSelectedIndex(0);
+            break;
+            
+            case "Talomo":
+            JComboPob.setSelectedIndex(1);
+            break;
+            
+            case "Agdao":
+            JComboPob.setSelectedIndex(2);
+            break;
+            
+            case "Buhangin":
+            JComboPob.setSelectedIndex(3);
+            break;
+            
+            case "Bunawan":
+            JComboPob.setSelectedIndex(4);
+            break;
+            
+            case "Paquibato":
+            JComboPob.setSelectedIndex(5);
+            break;
+            
+            case "Baguio":
+            JComboPob.setSelectedIndex(6);
+            break;
+            
+            case "Calinan":
+            JComboPob.setSelectedIndex(7);
+            break;
+                    
+            case "Marilog":
+            JComboPob.setSelectedIndex(8);
+            break;
+            
+            case "Toril":
+            JComboPob.setSelectedIndex(9);
+            break;
+            
+            case "Tugbok":
+            JComboPob.setSelectedIndex(10);
+            break;
+            
+                }
+        
+          String District = model.getValueAt (index, 8).toString();
+            switch(District){
+        
+            case "1-A":
+            jComboDist.setSelectedIndex(0);
+            break;
+            
+            case "2-A":
+            jComboDist.setSelectedIndex(1);
+            break;
+            
+            case "3-A":
+            jComboDist.setSelectedIndex(2);
+            break;
+            
+            case "4-A":
+            jComboDist.setSelectedIndex(3);
+            break;
+            
+            case "5-A":
+            jComboDist.setSelectedIndex(4);
+            break;
+            
+            case "6-A":
+            jComboDist.setSelectedIndex(5);
+            break;
+            
+            case "7-A":
+            jComboDist.setSelectedIndex(6);
+            break;
+            
+            case "8-A":
+            jComboDist.setSelectedIndex(7);
+            break;
+                    
+            case "9-A":
+            jComboDist.setSelectedIndex(8);
+            break;
+            
+            case "10-A":
+            jComboDist.setSelectedIndex(9);
+            break;
+            
+            case "11-B":
+            jComboDist.setSelectedIndex(10);
+            break;
+            
+            case "12-B":
+            jComboDist.setSelectedIndex(11);
+            break;
+            
+            case "13-B":
+            jComboDist.setSelectedIndex(12);
+            break;
+            
+            case "14-B":
+            jComboDist.setSelectedIndex(13);
+            break;
+            
+            case "15-B":
+            jComboDist.setSelectedIndex(14);
+            break;
+            
+            case "16-B":
+            jComboDist.setSelectedIndex(15);
+            break;
+            
+            case "17-B":
+            jComboDist.setSelectedIndex(16);
+            break;
+            
+            case "18-B":
+            jComboDist.setSelectedIndex(17);
+            break;
+            
+            case "19-B":
+            jComboDist.setSelectedIndex(18);
+            break;
+            
+            case "20-B":
+            jComboDist.setSelectedIndex(19);
+            break;
+            
+            case "21-C":
+            jComboDist.setSelectedIndex(20);
+            break;
+            
+            case "22-C":
+            jComboDist.setSelectedIndex(21);
+            break;
+            
+            case "23-C":
+            jComboDist.setSelectedIndex(22);
+            break;
+            
+            case "24-C":
+            jComboDist.setSelectedIndex(23);
+            break;
+            
+            case "25-C":
+            jComboDist.setSelectedIndex(24);
+            break;
+            
+            case "26-C":
+            jComboDist.setSelectedIndex(25);
+            break;
+            
+            case "27-C":
+            jComboDist.setSelectedIndex(26);
+            break;
+            
+            case "28-C":
+            jComboDist.setSelectedIndex(27);
+            break;
+            
+            case "29-C":
+            jComboDist.setSelectedIndex(28);
+            break;
+            
+            case "30-C":
+            jComboDist.setSelectedIndex(29);
+            break;
+            
+            case "31-D":
+            jComboDist.setSelectedIndex(30);
+            break;
+            
+            case "32-D":
+            jComboDist.setSelectedIndex(31);
+            break;
+            
+            case "33-D":
+            jComboDist.setSelectedIndex(32);
+            break;
+            
+            case "34-D":
+            jComboDist.setSelectedIndex(33);
+            break;
+            
+            case "35-D":
+            jComboDist.setSelectedIndex(34);
+            break;
+            
+            case "36-D":
+            jComboDist.setSelectedIndex(35);
+            break;
+            
+            case "37-D":
+            jComboDist.setSelectedIndex(36);
+            break;
+            
+            case "38-D":
+            jComboDist.setSelectedIndex(37);
+            break;
+            
+            case "39-D":
+            jComboDist.setSelectedIndex(38);
+            break;
+            
+            case "40-D":
+            jComboDist.setSelectedIndex(39); 
+            break;
+            
+            case "Bago Aplaya":
+            jComboDist.setSelectedIndex(40); //------------------------40
+            break;
+            
+            case "Bago Gallera":
+            jComboDist.setSelectedIndex(41);
+            break;
+            
+            case "Baliok":
+            jComboDist.setSelectedIndex(42);
+            break;
+            
+            case "Bucana":
+            jComboDist.setSelectedIndex(43);
+            break;
+            
+            case "Catalunan Grande":
+            jComboDist.setSelectedIndex(44);
+            break;
+            
+            case "Catalunan Pequeño":
+            jComboDist.setSelectedIndex(45);
+            break;
+            
+            case "Dumoy":
+            jComboDist.setSelectedIndex(46);
+            break;
+            
+            case "Langub":
+            jComboDist.setSelectedIndex(47);
+            break;
+            
+            case "Ma-a":
+            jComboDist.setSelectedIndex(48);
+            break;
+            
+            case "Magtuod":
+            jComboDist.setSelectedIndex(49);
+            break;
+            
+            case "Matina Aplaya":
+            jComboDist.setSelectedIndex(50); //------------------------50
+            break;
+            
+            case "Matina Crossing":
+            jComboDist.setSelectedIndex(51);
+            break;
+            
+            case "Matina Pangi":
+            jComboDist.setSelectedIndex(52);
+            break;
+            
+            case "Talomo Proper":
+            jComboDist.setSelectedIndex(53);
+            break;
+            
+            case "Agdao Proper":
+            jComboDist.setSelectedIndex(54);
+            break;
+            
+            case "Centro (San Juan)":
+            jComboDist.setSelectedIndex(55);
+            break;
+            
+            case "Gov. Paciano Bangoy":
+            jComboDist.setSelectedIndex(56);
+            break;
+            
+            case "Gov. Vicente Duterte":
+            jComboDist.setSelectedIndex(57);
+            break;
+            
+            case "Kap. Tomas Monteverde, Sr.":
+            jComboDist.setSelectedIndex(58);
+            break;
+            
+            case "Lapu-Lapu":
+            jComboDist.setSelectedIndex(59); 
+            break;
+            
+            case "Leon Garcia":
+            jComboDist.setSelectedIndex(60); //-------------------------------------------60
+            break;
+            
+            case "Rafael Castillo":
+            jComboDist.setSelectedIndex(61);
+            break;
+            
+            case "San Antonio":
+            jComboDist.setSelectedIndex(62);
+            break;
+            
+            case "Ubalde":
+            jComboDist.setSelectedIndex(63);
+            break;
+            
+            case "Wilfredo Aquino":
+            jComboDist.setSelectedIndex(64);
+            break;
+            
+            case "Acacia":
+            jComboDist.setSelectedIndex(65);
+            break;
+            
+            case "Alfonso Angliongto Sr.a":
+            jComboDist.setSelectedIndex(66);
+            break;
+            
+            case "Buhangin Proper":
+            jComboDist.setSelectedIndex(67);
+            break;
+            
+            case "Cabantian":
+            jComboDist.setSelectedIndex(68);
+            break;
+            
+            case "Callawa":
+            jComboDist.setSelectedIndex(69);
+            break;
+            
+            case "Communal":
+            jComboDist.setSelectedIndex(70); //-----------------------------------70
+            break;
+            
+            case "Indangan":
+            jComboDist.setSelectedIndex(71);
+            break;
+            
+            case "Mandug":
+            jComboDist.setSelectedIndex(72);
+            break;
+            
+            case "Pampanga":
+            jComboDist.setSelectedIndex(73);
+            break;
+            
+            case "Sasa":
+            jComboDist.setSelectedIndex(74);
+            break;
+            
+            case "Tigatto":
+            jComboDist.setSelectedIndex(75);
+            break;
+            
+            case "Vicente Hizon Sr.a":
+            jComboDist.setSelectedIndex(76);
+            break;
+            
+            case "Waan":
+            jComboDist.setSelectedIndex(77);
+            break;
+            
+            case "Alejandra Navarro (Lasang)":
+            jComboDist.setSelectedIndex(78);
+            break;
+            
+            case "Bunawan Proper":
+            jComboDist.setSelectedIndex(79);
+            break;
+            
+            case "Gatungan":
+            jComboDist.setSelectedIndex(80); //------------------------------> 80
+            break;
+            
+            case "Ilang":
+            jComboDist.setSelectedIndex(81);
+            break;
+            
+            case "Mahayag":
+            jComboDist.setSelectedIndex(82);
+            break;
+            
+            case "Mudiang":
+            jComboDist.setSelectedIndex(83);
+            break;
+            
+            case "Panacan":
+            jComboDist.setSelectedIndex(84);
+            break;
+            
+            case "San Isidro (Licanan)":
+            jComboDist.setSelectedIndex(85);
+            break;           
+            
+            case "Tibungco":
+            jComboDist.setSelectedIndex(86);
+            break;
+            
+            case "Colosas":
+            jComboDist.setSelectedIndex(87);
+            break;
+            
+            case "Fatima (Benowang)":
+            jComboDist.setSelectedIndex(88);
+            break;
+            
+            case "Lumiad":
+            jComboDist.setSelectedIndex(89);
+            break;
+            
+            case "Mabuhay":
+            jComboDist.setSelectedIndex(90); //----------------------------->90
+            break;
+            
+            case "Malabog":
+            jComboDist.setSelectedIndex(91);
+            break;
+            
+            case "Mapula":
+            jComboDist.setSelectedIndex(92);
+            break;
+            
+            case "Panalum":
+            jComboDist.setSelectedIndex(93);
+            break;
+            
+            case "Pandaitan":
+            jComboDist.setSelectedIndex(94);
+            break;
+            
+            case "Paquibato Proper":
+            jComboDist.setSelectedIndex(95);
+            break;
+            
+            case "Paradise Embak":
+            jComboDist.setSelectedIndex(96);
+            break;
+            
+            case "Salapawan":
+            jComboDist.setSelectedIndex(97);
+            break;
+            
+            case "Sumimao":
+            jComboDist.setSelectedIndex(98);
+            break;
+            
+            case "Tapak":
+            jComboDist.setSelectedIndex(99);
+            break;
+            
+            case "Baguio Proper":
+            jComboDist.setSelectedIndex(100); //----------------------------->100
+            break;
+            
+            case "Cadalian":
+            jComboDist.setSelectedIndex(101);
+            break;
+            
+            case "Carmen":
+            jComboDist.setSelectedIndex(102);
+            break;
+            
+            case "Gumalang":
+            jComboDist.setSelectedIndex(103);
+            break;            
+            
+            case "Malagos":
+            jComboDist.setSelectedIndex(104);
+            break;
+            
+            case "Tambubong":
+            jComboDist.setSelectedIndex(105);
+            break;
+            
+            case "Tawan-Tawan":
+            jComboDist.setSelectedIndex(106);
+            break;
+            
+            case "Wines":
+            jComboDist.setSelectedIndex(107);
+            break;
+            
+            case "Biao Joaquin":
+            jComboDist.setSelectedIndex(108);
+            break;
+            
+            case "Calinan Proper":
+            jComboDist.setSelectedIndex(109);
+            break;
+            
+            case "Cawayan":
+            jComboDist.setSelectedIndex(110);
+            break;
+            
+            case "Dacudao":
+            jComboDist.setSelectedIndex(111);
+            break;
+            
+            case "Dalagdag":
+            jComboDist.setSelectedIndex(112);
+            break;
+            
+            case "Dominga":
+            jComboDist.setSelectedIndex(113);
+            break;
+            
+            case "Inayangan":
+            jComboDist.setSelectedIndex(114);
+            break;
+            
+            case "Lacson":
+            jComboDist.setSelectedIndex(115);
+            break;
+            
+            case "Lamanan":
+            jComboDist.setSelectedIndex(116);
+            break;
+            
+            case "Lampianao":
+            jComboDist.setSelectedIndex(117);
+            break;
+            
+            case "Megkawayan":
+            jComboDist.setSelectedIndex(118);
+            break;
+            
+            case "Pangyan":
+            jComboDist.setSelectedIndex(119);
+            break;
+            
+            case "Riverside":
+            jComboDist.setSelectedIndex(120); //-------------------------------------120
+            break;
+            
+            case "Saloy":
+            jComboDist.setSelectedIndex(121);
+            break;
+            
+            case "Sirib":
+            jComboDist.setSelectedIndex(122);
+            break;
+            
+            case "Subasta":
+            jComboDist.setSelectedIndex(123);
+            break;
+            
+            case "Talomo River":
+            jComboDist.setSelectedIndex(124);
+            break;
+            
+            case "Tamayong":
+            jComboDist.setSelectedIndex(125);
+            break;
+            
+            case "Wangan":
+            jComboDist.setSelectedIndex(126);
+            break;
+            
+            case "Baganihan":
+            jComboDist.setSelectedIndex(127);
+            break;
+            
+            case "Bantol":
+            jComboDist.setSelectedIndex(128);
+            break;
+            
+            case "Buda":
+            jComboDist.setSelectedIndex(129);
+            break;
+            
+            
+            case "Dalag":
+            jComboDist.setSelectedIndex(130); //--------------------------------------130
+            break;
+            
+            case "Datu Salumay":
+            jComboDist.setSelectedIndex(131);
+            break;
+            
+            case "Gumitan":
+            jComboDist.setSelectedIndex(132);
+            break;
+            
+            
+            case "Magsaysay":
+            jComboDist.setSelectedIndex(133);
+            break;
+            
+            case "Malamba":
+            jComboDist.setSelectedIndex(134);
+            break;
+            
+            case "Marilog Proper":
+            jComboDist.setSelectedIndex(135);
+            break;
+            
+            case "Salaysay":
+            jComboDist.setSelectedIndex(136);
+            break;
+            
+            case "Suawan (Tuli)":
+            jComboDist.setSelectedIndex(137);
+            break;
+            
+            case "Tamugan":
+            jComboDist.setSelectedIndex(138);
+            break;
+            
+            case "Alambre":
+            jComboDist.setSelectedIndex(139);
+            break;
+            
+            case "Atan-Awe":
+            jComboDist.setSelectedIndex(140);
+            break;
+            
+            case "Bangkas Heights":
+            jComboDist.setSelectedIndex(141);
+            break;
+            
+            case "Baracatan":
+            jComboDist.setSelectedIndex(142);
+            break;
+            
+            case "Bato":
+            jComboDist.setSelectedIndex(143);
+            break;
+            
+            case "Bayabas":
+            jComboDist.setSelectedIndex(144);
+            break;
+            
+            case "Binugao":
+            jComboDist.setSelectedIndex(145);
+            break;
+            
+            case "Camansi":
+            jComboDist.setSelectedIndex(146);
+            break;
+            
+            case "Catigan":
+            jComboDist.setSelectedIndex(147);
+            break;
+            
+            case "Crossing Bayabas":
+            jComboDist.setSelectedIndex(148);
+            break;
+            
+            case "Daliao":
+            jComboDist.setSelectedIndex(149);
+            break;
+            
+            case "Daliaon Plantation":
+            jComboDist.setSelectedIndex(150);
+            break;
+            
+            case "Eden":
+            jComboDist.setSelectedIndex(151);
+            break;
+            
+            case "Kilate":
+            jComboDist.setSelectedIndex(152);
+            break;
+            
+            case "Lizada":
+            jComboDist.setSelectedIndex(153);
+            break;
+            
+            case "Lubogan":
+            jComboDist.setSelectedIndex(154);
+            break;
+            
+            case "Marapangi":
+            jComboDist.setSelectedIndex(155);
+            break;
+            
+            case "Mulig":
+            jComboDist.setSelectedIndex(156);
+            break;
+           
+            case "Sibulan":
+            jComboDist.setSelectedIndex(157);
+            break;
+            
+            case "Sirawan":
+            jComboDist.setSelectedIndex(158);
+            break;
+            
+            case "Tagluno":
+            jComboDist.setSelectedIndex(159);
+            break;
+            
+            case "Tagurano":
+            jComboDist.setSelectedIndex(160); //------------------------------------------------>160
+            break;
+            
+            case "Tibuloy":
+            jComboDist.setSelectedIndex(161); //--------61
+            break;
+            
+            case "Toril Proper":
+            jComboDist.setSelectedIndex(162); //------62
+            break;
+            
+            case "Tungkalan":
+            jComboDist.setSelectedIndex(163); //-------------63
+            break;
+            
+            case "Angalan":
+            jComboDist.setSelectedIndex(164); //--------64
+            break;
+            
+            case "Bago Oshiro":
+            jComboDist.setSelectedIndex(165); //------------65
+            break;
+            
+            case "Balengaeng": //--------66
+            jComboDist.setSelectedIndex(166);
+            break;
+            
+            case "Biao Escuela": //--------66
+            jComboDist.setSelectedIndex(167);
+            break;
+            
+            case "Biao Guianga": //-------67
+            jComboDist.setSelectedIndex(168);
+            break;
+            
+            case "Los Amigos":
+            jComboDist.setSelectedIndex(169);
+            break;
+            
+            case "Manambulan":
+            jComboDist.setSelectedIndex(170);
+            break;
+            
+            case "Manuel Guianga":
+            jComboDist.setSelectedIndex(171);
+            break;
+            
+            case "Matina Biao":
+            jComboDist.setSelectedIndex(172);
+            break;
+            
+            case "Mintal":
+            jComboDist.setSelectedIndex(173);
+            break;
+            
+            case "New Carmen":
+            jComboDist.setSelectedIndex(174);
+            break;
+            
+            case "New Valencia":
+            jComboDist.setSelectedIndex(175);
+            break;
+            
+            case "Santo Niño":
+            jComboDist.setSelectedIndex(176);
+            break;
+            
+            case "Tacunan":
+            jComboDist.setSelectedIndex(177);
+            break;
+            
+            case "Tagakpan":
+            jComboDist.setSelectedIndex(178);
+            break;
+            
+            case "Talandang":
+            jComboDist.setSelectedIndex(179);
+            break;
+            
+            case "Tugbok Proper":
+            jComboDist.setSelectedIndex(180);
+            break;
+            
+            case "Ulas":
+            jComboDist.setSelectedIndex(181); //--------------------------->181
+            break;
+                               
+                }    
     }//GEN-LAST:event_tblBDRRMC1MouseClicked
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
@@ -646,7 +1483,7 @@ PreparedStatement pst = null;
     }
         int row = tblBDRRMC1.getSelectedRow();
         String value = (tblBDRRMC1.getModel().getValueAt(row, 0).toString());
-        String query ="Update tblBDRRMC set choices = ?, Composition_of_BDRRMC = ?,Composition = ? , ContactNo = ?,Position = ?, No = ?, Date = ? where ID ="+value;
+        String query ="Update tblBDRRMC set choices = ?, Composition_of_BDRRMC = ?,Composition = ? , ContactNo = ?,Position = ?, No = ?, Baranggay = ?, District = ?, Date = ? where ID ="+value;
         PreparedStatement pst = null;
     try {
         pst = conn.prepareStatement(query);
@@ -674,6 +1511,14 @@ PreparedStatement pst = null;
     } catch (SQLException ex) {
         Logger.getLogger(FrmAddBDRRMC.class.getName()).log(Level.SEVERE, null, ex);
     }
+//        String Operation;
+//        Operation = ComboBox2.getSelectedItem().toString();       
+//    try {
+//        pst.setString(2, Operation);
+//    } catch (SQLException ex) {
+//        Logger.getLogger(FrmAddBDRRMC.class.getName()).log(Level.SEVERE, null, ex);
+//    }
+//        
    try {
         pst.setString(4, txtContactNo.getText());
     } catch (SQLException ex) {
@@ -682,11 +1527,19 @@ PreparedStatement pst = null;
     try {
         pst.setString(5, txtPosition.getText());
         pst.setString(6, txtNo.getText());
-   
+        
+        String Baranggay;
+        Baranggay = JComboPob.getSelectedItem().toString();       
+        pst.setString(7, Baranggay);
+        
+        String District;
+        District = jComboDist.getSelectedItem().toString();       
+        pst.setString(8, District);
+        
         SimpleDateFormat dFormat = new SimpleDateFormat("yyyy");
         String date = dFormat.format(jDateChooser1.getDate());
-        pst.setString(7,date);
-        
+        pst.setString(9,date);
+    
         pst.executeUpdate();
         DefaultTableModel model = (DefaultTableModel)tblBDRRMC1.getModel();
         model.setRowCount(1);
@@ -731,6 +1584,7 @@ PreparedStatement pst = null;
        txtComposition.setBackground(Color.GRAY);
        txtContactNo.setEnabled(false);
        txtContactNo.setBackground(Color.GRAY);
+//       txtContactNo.hide();
        txtPosition.setEnabled(false);
        txtPosition.setBackground(Color.GRAY);
        ComboBox.setEnabled(false);
@@ -738,6 +1592,8 @@ PreparedStatement pst = null;
        txtComposition.setText("");
        txtContactNo.setText("");
        txtPosition.setText("");
+//       ComboBox2.setEnabled(false);
+//       ComboBox2.setBackground(Color.GRAY);
     }//GEN-LAST:event_rnoActionPerformed
 
     private void ryesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ryesActionPerformed
@@ -747,11 +1603,14 @@ PreparedStatement pst = null;
        txtComposition.setBackground(Color.WHITE);
        txtContactNo.setEnabled(true);
        txtContactNo.setBackground(Color.WHITE);
+//       txtContactNo.show();
        txtPosition.setEnabled(true);
        txtPosition.setBackground(Color.WHITE);
        ComboBox.setEnabled(true);
-       ComboBox.setBackground(Color.WHITE);
+//       ComboBox.setBackground(Color.WHITE);
        txtNo.setText("");
+//       ComboBox2.setEnabled(true);
+//       ComboBox2.setBackground(Color.WHITE);
     }//GEN-LAST:event_ryesActionPerformed
 
     private void ComboBoxDateItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ComboBoxDateItemStateChanged
@@ -770,6 +1629,18 @@ PreparedStatement pst = null;
             
         }
     }//GEN-LAST:event_ComboBoxDateItemStateChanged
+
+    private void ComboBoxDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxDateActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ComboBoxDateActionPerformed
+
+    private void ComboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ComboBoxItemStateChanged
+
+    }//GEN-LAST:event_ComboBoxItemStateChanged
+
+    private void txtCompositionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCompositionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCompositionActionPerformed
         
     
  
@@ -852,6 +1723,7 @@ PreparedStatement pst = null;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> ComboBox;
     private javax.swing.JComboBox<String> ComboBoxDate;
+    private javax.swing.JComboBox<String> JComboPob;
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnDelete;
@@ -862,6 +1734,7 @@ PreparedStatement pst = null;
     private javax.swing.ButtonGroup buttonGroup4;
     private javax.swing.ButtonGroup buttonGroup5;
     private javax.swing.ButtonGroup buttonGroup6;
+    private javax.swing.JComboBox<String> jComboDist;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel14;
@@ -869,6 +1742,8 @@ PreparedStatement pst = null;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
