@@ -37,6 +37,7 @@ public class FrmAddSignage extends javax.swing.JFrame {
         initComponents();
          ComboboxDate();
         show_Signage();
+           this.setLocationRelativeTo(null);
           if(SQLite.openDB()){
             String[][] data = SQLite.read("tblSignage");
             String[] column = {"ID","Type","Location","Units","Material_used","Baranggay","District","Date"};
@@ -49,7 +50,7 @@ public class FrmAddSignage extends javax.swing.JFrame {
     public void ComboboxDate(){ //#5
      try{
           Class.forName("org.sqlite.JDBC");
-          url = "jdbc:sqlite:C:\\Users\\Rannie Claire\\Documents\\NetBeansProjects\\BarangayInformationSystem\\src\\BIS\\bis.sqlite";     
+//          url = "jdbc:sqlite:C:\\Users\\Rannie Claire\\Documents\\NetBeansProjects\\BarangayInformationSystem\\src\\BIS\\bis.sqlite";     
           conn = java.sql.DriverManager.getConnection(url);
           SQLite.openDB();
           String query = "Select DISTINCT Date from tblSignage ORDER BY ID DESC";
@@ -88,7 +89,7 @@ public class FrmAddSignage extends javax.swing.JFrame {
          ArrayList<Signage> SignageList = new ArrayList<>();
          try{
              Class.forName("org.sqlite.JDBC");
-             String url = "jdbc:sqlite:C:\\Users\\Rannie Claire\\Documents\\NetBeansProjects\\BarangayInformationSystem\\src\\BIS\\bis.sqlite";
+//             String url = "jdbc:sqlite:C:\\Users\\Rannie Claire\\Documents\\NetBeansProjects\\BarangayInformationSystem\\src\\BIS\\bis.sqlite";
              conn = java.sql.DriverManager.getConnection(url);
              String query = "Select * from tblSignage";
              Statement st = conn.createStatement();
@@ -167,10 +168,12 @@ public class FrmAddSignage extends javax.swing.JFrame {
         JComboPob = new javax.swing.JComboBox<>();
         jComboDist = new javax.swing.JComboBox<>();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Date.png"))); // NOI18N
         jLabel1.setText("Date");
 
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Add New.png"))); // NOI18N
         jButton1.setText("New");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -178,6 +181,7 @@ public class FrmAddSignage extends javax.swing.JFrame {
             }
         });
 
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Update User.png"))); // NOI18N
         jButton2.setText("Update");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -185,6 +189,7 @@ public class FrmAddSignage extends javax.swing.JFrame {
             }
         });
 
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Delete.png"))); // NOI18N
         jButton3.setText("Delete");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -192,6 +197,7 @@ public class FrmAddSignage extends javax.swing.JFrame {
             }
         });
 
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Save.png"))); // NOI18N
         jButton4.setText("Save");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -226,6 +232,7 @@ public class FrmAddSignage extends javax.swing.JFrame {
 
         jLabel2.setText("Type of Signage");
 
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Location.png"))); // NOI18N
         jLabel3.setText("Location where it is/They are put up");
 
         jLabel4.setText("Number of Units put up");
@@ -252,7 +259,8 @@ public class FrmAddSignage extends javax.swing.JFrame {
 
         jLabel6.setText("Year");
 
-        jButton5.setText("Cancel");
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Back.png"))); // NOI18N
+        jButton5.setText("Back");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
@@ -427,7 +435,7 @@ public class FrmAddSignage extends javax.swing.JFrame {
         if (p==0){
         try {
         Class.forName("org.sqlite.JDBC");
-        url = "jdbc:sqlite:C:\\Users\\Rannie Claire\\Documents\\NetBeansProjects\\BarangayInformationSystem\\src\\BIS\\bis.sqlite";     
+//        url = "jdbc:sqlite:C:\\Users\\Rannie Claire\\Documents\\NetBeansProjects\\BarangayInformationSystem\\src\\BIS\\bis.sqlite";     
         conn = java.sql.DriverManager.getConnection(url);    
         int row = tblSignage1.getSelectedRow();
         String value = (tblSignage1.getModel().getValueAt(row, 0).toString());
@@ -449,12 +457,12 @@ public class FrmAddSignage extends javax.swing.JFrame {
         
     try {
           Class.forName("org.sqlite.JDBC");
-          url = "jdbc:sqlite:C:\\Users\\Rannie Claire\\Documents\\NetBeansProjects\\BarangayInformationSystem\\src\\BIS\\bis.sqlite";     
+//          url = "jdbc:sqlite:C:\\Users\\Rannie Claire\\Documents\\NetBeansProjects\\BarangayInformationSystem\\src\\BIS\\bis.sqlite";     
           conn = java.sql.DriverManager.getConnection(url);    
           String query ="Insert into tblSignage(Type,Location,Units,Material_used,Baranggay, District, date)values(?,?,?,?,?,?,?)";
           PreparedStatement pst = null;  
           pst = conn.prepareStatement(query);      
-           SimpleDateFormat dFormat = new SimpleDateFormat("yyyy");
+           SimpleDateFormat dFormat = new SimpleDateFormat("mm/dd/yyyy");
           String date = dFormat.format(jDateChooser1.getDate());
           String Baranggay;
           Baranggay = JComboPob.getSelectedItem().toString(); 
@@ -484,13 +492,13 @@ public class FrmAddSignage extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
          try {
           Class.forName("org.sqlite.JDBC");
-          url = "jdbc:sqlite:C:\\Users\\Rannie Claire\\Documents\\NetBeansProjects\\BarangayInformationSystem\\src\\BIS\\bis.sqlite";     
+//          url = "jdbc:sqlite:C:\\Users\\Rannie Claire\\Documents\\NetBeansProjects\\BarangayInformationSystem\\src\\BIS\\bis.sqlite";     
           Connection conn = DriverManager.getConnection(url);
           int row = tblSignage1.getSelectedRow();
           String value = (tblSignage1.getModel().getValueAt(row, 0).toString());
           String query ="Update tblSignage set Type = ?, Location = ? , Units = ?,Material_used = ?, Baranggay = ?, District = ?, Date = ? where ID ="+value;
           PreparedStatement pst = conn.prepareStatement(query);
-     SimpleDateFormat dFormat = new SimpleDateFormat("yyyy");
+     SimpleDateFormat dFormat = new SimpleDateFormat("mm/dd/yyyy");
           String date = dFormat.format(jDateChooser1.getDate());
           String Baranggay;
           Baranggay = JComboPob.getSelectedItem().toString(); 
@@ -506,7 +514,7 @@ public class FrmAddSignage extends javax.swing.JFrame {
           pst.setString(6, District); 
           pst.setString(7, date);
          
-         pst.executeUpdate(); 
+          pst.executeUpdate(); 
           DefaultTableModel model = (DefaultTableModel)tblSignage1.getModel();
           model.setRowCount(1);
           show_Signage();
@@ -556,7 +564,7 @@ public class FrmAddSignage extends javax.swing.JFrame {
           
         Date date = null;
         try {
-        date = new SimpleDateFormat("yyyy").parse(model.getValueAt(index, 7).toString());
+        date = new SimpleDateFormat("mm/dd/yyyy").parse(model.getValueAt(index, 7).toString());
            } catch (ParseException ex) {
                Logger.getLogger(FrmAddBDRRMC.class.getName()).log(Level.SEVERE, null, ex);
            }

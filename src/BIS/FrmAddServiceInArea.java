@@ -38,6 +38,7 @@ public class FrmAddServiceInArea extends javax.swing.JFrame {
         initComponents();
         ComboboxDate();
         show_Service();
+        this.setLocationRelativeTo(null);
          if(SQLite.openDB()){
             String[][] data = SQLite.read("tblServices");
             String[] column = {"ID","Type","others","Location","Units","Baranggay","District","Date"};
@@ -51,7 +52,7 @@ public class FrmAddServiceInArea extends javax.swing.JFrame {
      public void ComboboxDate(){ //#5
      try{
           Class.forName("org.sqlite.JDBC");
-          url = "jdbc:sqlite:C:\\Users\\Rannie Claire\\Documents\\NetBeansProjects\\BarangayInformationSystem\\src\\BIS\\bis.sqlite";     
+//          url = "jdbc:sqlite:C:\\Users\\Rannie Claire\\Documents\\NetBeansProjects\\BarangayInformationSystem\\src\\BIS\\bis.sqlite";     
           conn = java.sql.DriverManager.getConnection(url);
           SQLite.openDB();
           String query = "Select DISTINCT Date from tblServices ORDER BY ID DESC";
@@ -90,7 +91,7 @@ public class FrmAddServiceInArea extends javax.swing.JFrame {
          ArrayList<ServiceInArea> ServiceList = new ArrayList<>();
          try{
              Class.forName("org.sqlite.JDBC");
-             String url = "jdbc:sqlite:C:\\Users\\Rannie Claire\\Documents\\NetBeansProjects\\BarangayInformationSystem\\src\\BIS\\bis.sqlite";
+//             String url = "jdbc:sqlite:C:\\Users\\Rannie Claire\\Documents\\NetBeansProjects\\BarangayInformationSystem\\src\\BIS\\bis.sqlite";
              conn = java.sql.DriverManager.getConnection(url);
              String query = "Select * from tblServices";
              Statement st = conn.createStatement();
@@ -198,6 +199,7 @@ public class FrmAddServiceInArea extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Location.png"))); // NOI18N
         jLabel1.setText("Location (Pls. Specify");
 
         jLabel2.setText("No. of units");
@@ -226,13 +228,15 @@ public class FrmAddServiceInArea extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblServices1);
 
-        jButton1.setText("Cancel");
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Back.png"))); // NOI18N
+        jButton1.setText("Back");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Update User.png"))); // NOI18N
         jButton2.setText("Update");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -240,6 +244,7 @@ public class FrmAddServiceInArea extends javax.swing.JFrame {
             }
         });
 
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Delete.png"))); // NOI18N
         jButton3.setText("Delete");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -247,6 +252,7 @@ public class FrmAddServiceInArea extends javax.swing.JFrame {
             }
         });
 
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Add New.png"))); // NOI18N
         jButton4.setText("New");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -254,6 +260,7 @@ public class FrmAddServiceInArea extends javax.swing.JFrame {
             }
         });
 
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Save.png"))); // NOI18N
         jButton5.setText("Save");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -261,6 +268,7 @@ public class FrmAddServiceInArea extends javax.swing.JFrame {
             }
         });
 
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Date.png"))); // NOI18N
         jLabel3.setText("Date");
 
         jLabel4.setText("Baranggay");
@@ -414,12 +422,12 @@ public class FrmAddServiceInArea extends javax.swing.JFrame {
 
     try {
           Class.forName("org.sqlite.JDBC");
-          url = "jdbc:sqlite:C:\\Users\\Rannie Claire\\Documents\\NetBeansProjects\\BarangayInformationSystem\\src\\BIS\\bis.sqlite";     
+//          url = "jdbc:sqlite:C:\\Users\\Rannie Claire\\Documents\\NetBeansProjects\\BarangayInformationSystem\\src\\BIS\\bis.sqlite";     
           conn = java.sql.DriverManager.getConnection(url);    
           String query ="Insert into tblServices(Type,others,Location,Units,Baranggay, District, date)values(?,?,?,?,?,?,?)";
           PreparedStatement pst = null;  
           pst = conn.prepareStatement(query);      
-           SimpleDateFormat dFormat = new SimpleDateFormat("yyyy");
+           SimpleDateFormat dFormat = new SimpleDateFormat("mm/dd/yyyy");
           String date = dFormat.format(jDateChooser1.getDate());
           String Baranggay;
           Baranggay = JComboPob.getSelectedItem().toString(); 
@@ -459,7 +467,7 @@ public class FrmAddServiceInArea extends javax.swing.JFrame {
         if (p==0){
         try {
         Class.forName("org.sqlite.JDBC");
-        url = "jdbc:sqlite:C:\\Users\\Rannie Claire\\Documents\\NetBeansProjects\\BarangayInformationSystem\\src\\BIS\\bis.sqlite";     
+//        url = "jdbc:sqlite:C:\\Users\\Rannie Claire\\Documents\\NetBeansProjects\\BarangayInformationSystem\\src\\BIS\\bis.sqlite";     
         conn = java.sql.DriverManager.getConnection(url);    
         int row = tblServices1.getSelectedRow();
         String value = (tblServices1.getModel().getValueAt(row, 0).toString());
@@ -518,7 +526,7 @@ public class FrmAddServiceInArea extends javax.swing.JFrame {
           
         Date date = null;
         try {
-        date = new SimpleDateFormat("yyyy").parse(model.getValueAt(index, 7).toString());
+        date = new SimpleDateFormat("mm/dd/yyyy").parse(model.getValueAt(index, 7).toString());
            } catch (ParseException ex) {
                Logger.getLogger(FrmAddBDRRMC.class.getName()).log(Level.SEVERE, null, ex);
            }
@@ -1330,14 +1338,14 @@ public class FrmAddServiceInArea extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
       try {
           Class.forName("org.sqlite.JDBC");
-          url = "jdbc:sqlite:C:\\Users\\Rannie Claire\\Documents\\NetBeansProjects\\BarangayInformationSystem\\src\\BIS\\bis.sqlite";     
+//          url = "jdbc:sqlite:C:\\Users\\Rannie Claire\\Documents\\NetBeansProjects\\BarangayInformationSystem\\src\\BIS\\bis.sqlite";     
           Connection conn = DriverManager.getConnection(url);
           int row = tblServices1.getSelectedRow();
           String value = (tblServices1.getModel().getValueAt(row, 0).toString());
           String query ="Update tblServices set Type = ?, others = ?,Location = ? , Units = ?, Baranggay = ?, District = ?, Date = ? where ID ="+value;
           PreparedStatement pst = conn.prepareStatement(query);
     
-          SimpleDateFormat dFormat = new SimpleDateFormat("yyyy");
+          SimpleDateFormat dFormat = new SimpleDateFormat("mm/dd/yyyy");
           String date = dFormat.format(jDateChooser1.getDate());
           String Baranggay;
           Baranggay = JComboPob.getSelectedItem().toString(); 

@@ -51,7 +51,7 @@ public class FrmAddEvacuationCenters extends javax.swing.JFrame {
      public void ComboboxDate(){
      try{
           Class.forName("org.sqlite.JDBC");
-          url = "jdbc:sqlite:C:\\Users\\Rannie Claire\\Documents\\NetBeansProjects\\BarangayInformationSystem\\src\\BIS\\bis.sqlite";     
+//          url = "jdbc:sqlite:C:\\Users\\Rannie Claire\\Documents\\NetBeansProjects\\BarangayInformationSystem\\src\\BIS\\bis.sqlite";     
           Connection conn = DriverManager.getConnection(url);
           SQLite.openDB();
           String query = "Select DISTINCT Date from tblEcenters";
@@ -91,7 +91,7 @@ public class FrmAddEvacuationCenters extends javax.swing.JFrame {
          ArrayList<EvacuationCenters> EcentersList = new ArrayList<>();
          try{
              Class.forName("org.sqlite.JDBC");
-             String url = "jdbc:sqlite:C:\\Users\\Rannie Claire\\Documents\\NetBeansProjects\\BarangayInformationSystem\\src\\BIS\\bis.sqlite";
+//             String url = "jdbc:sqlite:C:\\Users\\Rannie Claire\\Documents\\NetBeansProjects\\BarangayInformationSystem\\src\\BIS\\bis.sqlite";
              conn = java.sql.DriverManager.getConnection(url);
              String query = "Select * from tblEcenters";
              Statement st = conn.createStatement();
@@ -170,7 +170,7 @@ public class FrmAddEvacuationCenters extends javax.swing.JFrame {
         JComboPob = new javax.swing.JComboBox<>();
         jComboDist = new javax.swing.JComboBox<>();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(204, 204, 255));
 
         jLabel1.setText("Type");
@@ -203,6 +203,7 @@ public class FrmAddEvacuationCenters extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblEcenters1);
 
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Date.png"))); // NOI18N
         jLabel6.setText("Date");
 
         jLabel7.setText("Year");
@@ -213,13 +214,15 @@ public class FrmAddEvacuationCenters extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Cancel");
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Back.png"))); // NOI18N
+        jButton1.setText("Back");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Save.png"))); // NOI18N
         jButton2.setText("Save");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -227,6 +230,7 @@ public class FrmAddEvacuationCenters extends javax.swing.JFrame {
             }
         });
 
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Delete.png"))); // NOI18N
         jButton3.setText("Delete");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -234,6 +238,7 @@ public class FrmAddEvacuationCenters extends javax.swing.JFrame {
             }
         });
 
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Update User.png"))); // NOI18N
         jButton4.setText("Update");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -241,6 +246,7 @@ public class FrmAddEvacuationCenters extends javax.swing.JFrame {
             }
         });
 
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons8/Add New.png"))); // NOI18N
         jButton5.setText("New");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -377,12 +383,12 @@ public class FrmAddEvacuationCenters extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
        try {
           Class.forName("org.sqlite.JDBC");
-          url = "jdbc:sqlite:C:\\Users\\Rannie Claire\\Documents\\NetBeansProjects\\BarangayInformationSystem\\src\\BIS\\bis.sqlite";     
+//          url = "jdbc:sqlite:C:\\Users\\Rannie Claire\\Documents\\NetBeansProjects\\BarangayInformationSystem\\src\\BIS\\bis.sqlite";     
           Connection conn = DriverManager.getConnection(url);
           String query ="Insert into tblEcenters(Type, Location, Capacity, Suitability,Availability,Baranggay, District, Date)values(?,?,?,?,?,?,?,?)";
           PreparedStatement pst = null;  
           pst = conn.prepareStatement(query);     
-          SimpleDateFormat dFormat = new SimpleDateFormat("yyyy");
+          SimpleDateFormat dFormat = new SimpleDateFormat("mm/dd/yyyy");
           String date = dFormat.format(jDateChooser1.getDate());
           String Baranggay;
           Baranggay = JComboPob.getSelectedItem().toString(); 
@@ -412,14 +418,14 @@ public class FrmAddEvacuationCenters extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
           try {
           Class.forName("org.sqlite.JDBC");
-          url = "jdbc:sqlite:C:\\Users\\Rannie Claire\\Documents\\NetBeansProjects\\BarangayInformationSystem\\src\\BIS\\bis.sqlite";     
+//          url = "jdbc:sqlite:C:\\Users\\Rannie Claire\\Documents\\NetBeansProjects\\BarangayInformationSystem\\src\\BIS\\bis.sqlite";     
           Connection conn = DriverManager.getConnection(url);
           int row = tblEcenters1.getSelectedRow();
           String value = (tblEcenters1.getModel().getValueAt(row, 0).toString());
           String query ="Update tblEcenters set Type = ?,Location = ? ,Capacity = ?,Suitability = ?,Availability =?,Baranggay = ?, District = ?, Date = ? where ID ="+value;
           PreparedStatement pst = null;  
           pst = conn.prepareStatement(query);      
-          SimpleDateFormat dFormat = new SimpleDateFormat("yyyy");
+          SimpleDateFormat dFormat = new SimpleDateFormat("mm/dd/yyyy");
           String date = dFormat.format(jDateChooser1.getDate());
           String Baranggay;
           Baranggay = JComboPob.getSelectedItem().toString(); 
@@ -451,7 +457,7 @@ public class FrmAddEvacuationCenters extends javax.swing.JFrame {
         if (s==0){
         try {
         Class.forName("org.sqlite.JDBC");
-        url = "jdbc:sqlite:C:\\Users\\Rannie Claire\\Documents\\NetBeansProjects\\BarangayInformationSystem\\src\\BIS\\bis.sqlite";     
+//        url = "jdbc:sqlite:C:\\Users\\Rannie Claire\\Documents\\NetBeansProjects\\BarangayInformationSystem\\src\\BIS\\bis.sqlite";     
         conn = java.sql.DriverManager.getConnection(url);    
         int row = tblEcenters1.getSelectedRow();
         String value = (tblEcenters1.getModel().getValueAt(row, 0).toString());
@@ -479,7 +485,7 @@ public class FrmAddEvacuationCenters extends javax.swing.JFrame {
         txtSuitability.setText(model.getValueAt(index, 4).toString());
           Date date = null;
         try {
-        date = new SimpleDateFormat("yyyy").parse(model.getValueAt(index, 8).toString());
+        date = new SimpleDateFormat("mm/dd/yyyy").parse(model.getValueAt(index, 8).toString());
            } catch (ParseException ex) {
                Logger.getLogger(FrmAddBDRRMC.class.getName()).log(Level.SEVERE, null, ex);
            }

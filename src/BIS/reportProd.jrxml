@@ -1,0 +1,777 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportProd" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a8259c6b-5b6c-4121-b236-f9402f1e47fa">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#FFFFFF"/>
+			<bottomPen lineWidth="0.5" lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#FFBFBF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#FFFFFF"/>
+			<bottomPen lineWidth="0.5" lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#FFFFFF"/>
+			<bottomPen lineWidth="0.5" lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<style name="table 2">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TH" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_CH" mode="Opaque" backcolor="#FFBFBF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 6">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 6_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 6_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 6_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 7">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 7_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 7_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 7_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 8">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 8_TH" mode="Opaque" backcolor="#F5F5F5">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 8_CH" mode="Opaque" backcolor="#FFBFBF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 8_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 9">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 9_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 9_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 9_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 10">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 10_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 10_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 10_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 11">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 11_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 11_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 11_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 12">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 12_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 12_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 12_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 13">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 13_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 13_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 13_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="New Dataset 1" uuid="f1684d53-4d08-4f75-b274-2b3b4d2f4eb7">
+		<queryString language="SQL">
+			<![CDATA[SELECT * FROM tblAreas
+WHERE Hazard LIKE 'Flood' and Date = "2012" order by Location;]]>
+		</queryString>
+		<field name="Hazard" class="java.lang.Object"/>
+		<field name="Sitio" class="java.lang.Object"/>
+		<field name="Location" class="java.lang.Object"/>
+		<group name="Hazard">
+			<groupExpression><![CDATA[$F{Hazard}]]></groupExpression>
+		</group>
+		<group name="Location">
+			<groupExpression><![CDATA[$F{Location}]]></groupExpression>
+		</group>
+		<group name="Sitio">
+			<groupExpression><![CDATA[$F{Sitio}]]></groupExpression>
+		</group>
+	</subDataset>
+	<subDataset name="New Dataset 2" uuid="5732443d-f620-43d3-ac25-0e5128668f7e">
+		<queryString language="SQL">
+			<![CDATA[SELECT * FROM tblAreas
+WHERE Hazard LIKE 'Flood' and Date = "2012" order by Location;]]>
+		</queryString>
+		<field name="Hazard" class="java.lang.Object"/>
+		<field name="Location" class="java.lang.Object"/>
+		<field name="Sitio" class="java.lang.Object"/>
+		<group name="Hazard">
+			<groupExpression><![CDATA[$F{Hazard}]]></groupExpression>
+		</group>
+		<group name="Location">
+			<groupExpression><![CDATA[$F{Location}]]></groupExpression>
+		</group>
+		<group name="Sitio">
+			<groupExpression><![CDATA[$F{Sitio}]]></groupExpression>
+		</group>
+	</subDataset>
+	<subDataset name="Table Dataset 1" uuid="0805952b-26da-4d53-9a4d-ef0e2c24ccac"/>
+	<subDataset name="Table Dataset 2" uuid="068479f8-ad00-46fe-b23d-3f0334b91684"/>
+	<subDataset name="Table Dataset 3" uuid="d8a93eb7-36aa-4888-a6d0-bdf10c4c5d65"/>
+	<subDataset name="1" uuid="222197e5-5ac3-449a-8acf-cb0a55e2a747">
+		<queryString language="SQL">
+			<![CDATA[SELECT * FROM tblAreas]]>
+		</queryString>
+		<field name="Location" class="java.lang.Object"/>
+		<field name="Sitio" class="java.lang.Object"/>
+		<group name="Location">
+			<groupExpression><![CDATA[$F{Location}]]></groupExpression>
+		</group>
+		<group name="Sitio">
+			<groupExpression><![CDATA[$F{Sitio}]]></groupExpression>
+		</group>
+	</subDataset>
+	<subDataset name="try" uuid="64de8043-3dba-427c-a320-614cef23b1d5">
+		<queryString language="SQL">
+			<![CDATA[SELECT * FROM tblAreas
+WHERE Hazard LIKE 'Flood' and Date = "2012" order by Location;]]>
+		</queryString>
+		<field name="Location" class="java.lang.Object"/>
+		<field name="Sitio" class="java.lang.Object"/>
+		<group name="Location">
+			<groupExpression><![CDATA[$F{Location}]]></groupExpression>
+		</group>
+		<group name="Sitio">
+			<groupExpression><![CDATA[$F{Sitio}]]></groupExpression>
+		</group>
+	</subDataset>
+	<subDataset name="try2" uuid="cd2a755c-e59c-4aa3-8079-715f4f2c2adb">
+		<queryString language="SQL">
+			<![CDATA[SELECT * FROM tblAreas
+WHERE Hazard LIKE 'Flood' and Date = "2012" order by Location;]]>
+		</queryString>
+		<field name="Location" class="java.lang.Object"/>
+		<field name="Sitio" class="java.lang.Object"/>
+		<group name="Location">
+			<groupExpression><![CDATA[$F{Location}]]></groupExpression>
+		</group>
+		<group name="Sitio">
+			<groupExpression><![CDATA[$F{Sitio}]]></groupExpression>
+		</group>
+	</subDataset>
+	<subDataset name="try3" uuid="a40794a0-e827-4f20-9fbe-d3d0a87f8f62">
+		<queryString language="SQL">
+			<![CDATA[SELECT * FROM tblAreas
+WHERE Hazard LIKE 'Flood' and Date = "2012" order by Location;]]>
+		</queryString>
+		<field name="Location" class="java.lang.Object"/>
+		<field name="Sitio" class="java.lang.Object"/>
+		<group name="Location">
+			<groupExpression><![CDATA[$F{Location}]]></groupExpression>
+		</group>
+		<group name="Sitio">
+			<groupExpression><![CDATA[$F{Sitio}]]></groupExpression>
+		</group>
+	</subDataset>
+	<subDataset name="try4" uuid="6b653aa8-0090-440f-95d3-a2c7e0fa8c5a">
+		<queryString language="SQL">
+			<![CDATA[Select Distinct Hazard from tblAreas where Hazard Like 'Flood' and Date = "2012"]]>
+		</queryString>
+		<field name="Hazard" class="java.lang.Object"/>
+		<group name="Hazard">
+			<groupExpression><![CDATA[$F{Hazard}]]></groupExpression>
+		</group>
+	</subDataset>
+	<subDataset name="Hazard" uuid="d1851f7f-3041-49b9-ae31-85cd77ba72f9">
+		<queryString language="SQL">
+			<![CDATA[SELECT * FROM tblAreas WHERE Date = "2017" order by Hazard,Location;]]>
+		</queryString>
+		<field name="Hazard" class="java.lang.Object"/>
+		<field name="Location" class="java.lang.Object"/>
+		<field name="Sitio" class="java.lang.Object"/>
+		<group name="Hazard">
+			<groupExpression><![CDATA[$F{Hazard}]]></groupExpression>
+		</group>
+		<group name="Location">
+			<groupExpression><![CDATA[$F{Location}]]></groupExpression>
+		</group>
+		<group name="Sitio">
+			<groupExpression><![CDATA[$F{Sitio}]]></groupExpression>
+		</group>
+	</subDataset>
+	<subDataset name="Hazrd2" uuid="393b4f8e-e693-425d-b871-89b1a8758f50">
+		<queryString language="SQL">
+			<![CDATA[SELECT * FROM tblAreas WHERE Date = "2017" order by Hazard,Location;]]>
+		</queryString>
+		<field name="Hazard" class="java.lang.Object"/>
+		<field name="Location" class="java.lang.Object"/>
+		<field name="Sitio" class="java.lang.Object"/>
+		<group name="Hazard">
+			<groupExpression><![CDATA[$F{Hazard}]]></groupExpression>
+		</group>
+		<group name="Location">
+			<groupExpression><![CDATA[$F{Location}]]></groupExpression>
+		</group>
+		<group name="Sitio">
+			<groupExpression><![CDATA[$F{Sitio}]]></groupExpression>
+		</group>
+	</subDataset>
+	<subDataset name="Signages" uuid="438084be-ad90-4389-a3ad-676c86333abc">
+		<queryString language="SQL">
+			<![CDATA[Select Type, Units,Location from tblSignage where Date = "2017"]]>
+		</queryString>
+		<field name="Type" class="java.lang.Object"/>
+		<field name="Units" class="java.lang.Object"/>
+		<field name="Location" class="java.lang.Object"/>
+		<group name="Type">
+			<groupExpression><![CDATA[$F{Type}]]></groupExpression>
+		</group>
+		<group name="Units">
+			<groupExpression><![CDATA[$F{Units}]]></groupExpression>
+		</group>
+		<group name="Location">
+			<groupExpression><![CDATA[$F{Location}]]></groupExpression>
+		</group>
+	</subDataset>
+	<subDataset name="EC" uuid="38803a82-751a-4a5d-881c-0d9652eff1cd">
+		<queryString language="SQL">
+			<![CDATA[Select *  from tblEcenters where Date ="2017"]]>
+		</queryString>
+		<field name="Type" class="java.lang.Object"/>
+		<field name="Location" class="java.lang.Object"/>
+		<field name="Capacity" class="java.lang.Object"/>
+		<group name="Type">
+			<groupExpression><![CDATA[$F{Type}]]></groupExpression>
+		</group>
+		<group name="Location">
+			<groupExpression><![CDATA[$F{Location}]]></groupExpression>
+		</group>
+		<group name="Capacity">
+			<groupExpression><![CDATA[$F{Capacity}]]></groupExpression>
+		</group>
+	</subDataset>
+	<queryString>
+		<![CDATA[SELECT
+tblBDRRMC.Composition_of_BDRRMC LIKE 'BDRRM OFFICER' ,tblBDRRMC.Composition,tblBDRRMC.Baranggay, tblBDRRMC.District,tblBDRRMC.ContactNo,tblDOC.ContactNo1,tblDOC.Date
+FROM
+     tblBDRRMC,tblDOC where tblDOC.Date  = "2017" ]]>
+	</queryString>
+	<field name="tblBDRRMC.Composition_of_BDRRMC LIKE &apos;BDRRM OFFICER&apos;" class="java.lang.Object"/>
+	<field name="Composition" class="java.lang.Object"/>
+	<field name="Baranggay" class="java.lang.Object"/>
+	<field name="District" class="java.lang.Object"/>
+	<field name="ContactNo" class="java.lang.Object"/>
+	<field name="ContactNo1" class="java.lang.Object"/>
+	<field name="Date" class="java.lang.Object"/>
+	<title>
+		<band height="42" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="42" uuid="85a248a7-4675-4be2-92f1-7df95c420969"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[BARANGAY INFORMATION SYSTEM (BIS) CY]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="435" y="0" width="36" height="19" uuid="c4091288-05a4-4c60-90e3-79d26f19166e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Date}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="80" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="175" height="20" uuid="687d9a32-861d-4697-9695-baeeabbca361"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Name of Barangay		:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="20" width="175" height="20" uuid="62376fa9-e272-4827-b965-2d909df8423c"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[District			:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="40" width="175" height="20" uuid="7f67c3e1-7dce-4eb9-9128-311885ae5c56"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[     1. BDRRM OFFICER	:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="60" width="175" height="20" uuid="be31ed5f-5588-4bd6-8f70-97d779030fda"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[     2. RADIO BASE		:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="393" y="40" width="79" height="20" uuid="a4288ec0-8312-47bd-a57e-2dfe82107eaa"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Contact No. :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="175" y="0" width="100" height="20" uuid="6dca50a0-d7d0-4988-badf-a004e3fa2c60"/>
+				<textFieldExpression><![CDATA[$F{Baranggay}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="175" y="20" width="100" height="20" uuid="3b16c9bf-4a72-4713-ab5b-630b4fd180c3"/>
+				<textFieldExpression><![CDATA[$F{District}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="472" y="40" width="83" height="20" uuid="2dbe95e0-3499-454a-be59-d88988e84559"/>
+				<textFieldExpression><![CDATA[$F{ContactNo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="175" y="60" width="100" height="20" uuid="b6bbe1be-7317-49ec-b3a4-3fe2f6091319"/>
+				<textFieldExpression><![CDATA[$F{ContactNo1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="175" y="40" width="100" height="20" uuid="3fabd1cf-332a-439a-b8bf-9d74791da09a"/>
+				<textFieldExpression><![CDATA[$F{Composition}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="175" y="19" width="218" height="1" uuid="086c50f0-2dee-4e59-9153-8e15ee7ef363"/>
+			</line>
+			<line>
+				<reportElement x="175" y="59" width="218" height="1" uuid="958af2c4-288d-40b1-9abd-8bcb4874d1be"/>
+			</line>
+			<line>
+				<reportElement x="175" y="40" width="218" height="1" uuid="3a64f073-d767-4330-bb90-e89261585abd"/>
+			</line>
+			<line>
+				<reportElement x="175" y="79" width="218" height="1" uuid="0ecc6395-5426-4b86-807f-3a153736c98c"/>
+			</line>
+			<line>
+				<reportElement x="472" y="59" width="83" height="1" uuid="ff50d9ec-f4ec-4b34-875a-b9c5ba7a8bfb"/>
+			</line>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="27" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="501" splitType="Stretch">
+			<componentElement>
+				<reportElement key="table 11" style="table 11" x="0" y="0" width="555" height="178" uuid="fad9dcbb-8e49-48ff-a74e-b2c3897383e5"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Hazrd2" uuid="7e4f285c-0636-4718-8314-5651dacfb486">
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="157" uuid="a3ca26cf-9591-444e-8553-163e3d1078c6">
+						<jr:columnHeader style="table 11_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="157" height="30" uuid="9fe374e1-0479-416a-8d97-5248f7e3b176"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="12" isBold="true"/>
+								</textElement>
+								<text><![CDATA[3. Hazards]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table 11_TD" height="22" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="157" height="20" uuid="f6f7414e-dea1-48bc-86ba-2310e8d5a9f5"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[""+$F{Hazard}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="264" uuid="afe6340a-a9f9-4a7c-ad4b-41cbce4bfa06">
+						<jr:columnHeader style="table 11_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="264" height="30" uuid="ce76fe08-7a4a-4b28-a0c7-4ee686d07986"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="12" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Purok/Areas]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table 11_TD" height="22" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="264" height="20" uuid="87fcea26-dca7-456a-bc2b-511c2bade6c2"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[""+$F{Location}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="130" uuid="c4a47bb2-dfa1-4362-a710-413a5eda935c">
+						<jr:columnHeader style="table 11_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="130" height="30" uuid="804c2f0d-fdca-4fb1-9c4e-7be73a7ea1c4"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="10" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Total No. of Population]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table 11_TD" height="22" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="130" height="20" uuid="3861889c-aa59-4342-a479-563b71cecc71"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[""+$F{Sitio}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<componentElement>
+				<reportElement key="table 12" style="table 12" x="1" y="233" width="555" height="167" uuid="3d1dff26-cb6e-4bee-ba9e-4debb31fc2c6"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Signages" uuid="edba9d9b-be6a-4e4a-a856-b46c98a09c69">
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="158" uuid="955fa3c6-2f0a-454e-abef-fff30afa01a5">
+						<jr:columnHeader style="table 12_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="158" height="30" uuid="b21fea73-e85b-4ba3-af19-127f4e7e00c8"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="12" isBold="true"/>
+								</textElement>
+								<text><![CDATA[4. SIGNAGES]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table 12_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="158" height="20" uuid="33a011f8-65ef-4a7a-94a8-277eb7ca2a2d"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[""+$F{Type}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="260" uuid="c1f01e82-129c-45d0-9790-07d3cd1270a5">
+						<jr:columnHeader style="table 12_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="2" y="0" width="258" height="30" uuid="7196bd50-30f3-4db1-97dc-4563a9e7455b"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="12" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Number of Pieces]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table 12_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="260" height="20" uuid="1d6d92c2-aff2-493e-84b2-3556d5833c4d"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[""+$F{Units}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="136" uuid="5e5e5e90-ca6a-490a-b266-6f40e5d03b23">
+						<jr:columnHeader style="table 12_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="136" height="30" uuid="3c8f7c65-a50c-4bab-800a-78ead5dacea1"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="12" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Location]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table 12_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="135" height="20" uuid="a6f552f7-e26a-4d5b-8988-227f8528faee"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[""+$F{Location}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<break>
+				<reportElement x="0" y="178" width="100" height="1" uuid="db7bff48-f212-4d80-9a7f-78e11e899cb7"/>
+			</break>
+			<break>
+				<reportElement x="0" y="221" width="100" height="1" uuid="13a2bfb4-b9fe-400f-8dea-d65828c64ec0"/>
+			</break>
+			<componentElement>
+				<reportElement key="table 13" style="table 13" x="1" y="400" width="554" height="101" uuid="75b1e6a1-caa0-4766-9523-829c68a92513"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="EC" uuid="7bccbfc2-dad1-48ea-befe-d8777992ed3a">
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="158" uuid="35b98de1-6f8d-43dd-a251-378bd2055b34">
+						<jr:columnHeader style="table 13_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="157" height="30" uuid="7855cfe3-fe88-4c63-a2e8-1417e8e0cd51"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="10" isBold="true"/>
+								</textElement>
+								<text><![CDATA[5. EVACUATION CENTERS:]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table 13_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="157" height="20" uuid="76b0b9d6-0a10-4a4c-955b-2b105f43c248"/>
+								<textFieldExpression><![CDATA[""+$F{Type}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="261" uuid="db3230f4-fe0d-42d6-8487-719f1a78590c">
+						<jr:columnHeader style="table 13_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="261" height="30" uuid="bf85f626-f729-4b02-b381-3e73f2d5bc26"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="12" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Location]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table 13_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="261" height="20" uuid="627e8483-894e-4481-ac59-93b7c0132548"/>
+								<textFieldExpression><![CDATA[""+$F{Location}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="133" uuid="e6c4573a-716a-466f-bc44-f0fa234e3fb5">
+						<jr:columnHeader style="table 13_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="133" height="30" uuid="94359eb7-d39d-4613-95fa-1d0c25b0ea64"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="12" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Capacity]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table 13_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="133" height="20" uuid="61ae56f2-db85-4b41-a9a2-09ae486bae86"/>
+								<textFieldExpression><![CDATA[""+$F{Capacity}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="67" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="85" splitType="Stretch">
+			<textField>
+				<reportElement x="436" y="65" width="80" height="20" uuid="66d4aa98-04d1-4321-b56e-e98cdba452d2"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="516" y="65" width="40" height="20" uuid="3f8cbc30-d1f1-472f-b37c-006fc6833b7c"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

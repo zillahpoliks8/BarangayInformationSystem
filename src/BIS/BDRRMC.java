@@ -14,7 +14,7 @@ public class BDRRMC {
     private String District;
     private String Date;
   
-    public BDRRMC(int id, String choices,String Composition_of_BDRRMC,String Composition,String ContactNo,String Position,String No, String Branggay, String District, String Date)
+    public BDRRMC(int id, String choices,String Composition_of_BDRRMC,String Composition,String ContactNo,String Position,String No, String District, String Baranggay, String Date)
     {
     this.id = id;
     this.choices = choices;
@@ -23,8 +23,8 @@ public class BDRRMC {
     this.ContactNo = ContactNo;
     this.Position = Position;
     this.No = No;
-    this.Baranggay = Baranggay;
     this.District = District;  
+    this.Baranggay = Baranggay; 
     this.Date= Date;
     }
     
